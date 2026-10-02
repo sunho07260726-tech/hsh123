@@ -1,0 +1,1382 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>전력공학 5·6장 CBT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: exam-sheet column (question card) + sticky answer-sheet grid; stacks on phones. */
+:root{
+  --bg:#EEF2F5; --surface:#FFFFFF; --ink:#13202B; --muted:#5A6A78; --line:#CBD5DD;
+  --accent:#1D4E89; --accent-ink:#FFFFFF; --accent-soft:#E1ECF8;
+  --ok:#1E7A4C; --ok-soft:#DDF1E5; --bad:#B3382C; --bad-soft:#F8E1DD; --note:#F6F0DC;
+  --f-body:"IBM Plex Sans KR","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F161C; --surface:#18222B; --ink:#E5ECF2; --muted:#93A4B2; --line:#2D3C48;
+  --accent:#7FB2EC; --accent-ink:#0B1722; --accent-soft:#1F3347;
+  --ok:#5CC48D; --ok-soft:#173A29; --bad:#F08A7E; --bad-soft:#44201C; --note:#2B2815; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F161C; --surface:#18222B; --ink:#E5ECF2; --muted:#93A4B2; --line:#2D3C48;
+  --accent:#7FB2EC; --accent-ink:#0B1722; --accent-soft:#1F3347;
+  --ok:#5CC48D; --ok-soft:#173A29; --bad:#F08A7E; --bad-soft:#44201C; --note:#2B2815; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;padding-inline:16px;padding-block:20px 48px}
+.wrap{max-width:1080px;margin-inline:auto}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding-bottom:14px;border-bottom:2px solid var(--ink);margin-bottom:20px}
+header.top h1{font-size:1.4rem;margin:0;font-weight:700;text-wrap:balance}
+header.top .sub{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px}
+.home{display:grid;gap:16px;max-width:680px}
+.home h2{margin:0 0 4px;font-size:1.1rem}
+.field{display:grid;gap:8px;margin-top:16px}
+.field>label,.field>.lab{font-size:.85rem;color:var(--muted);font-weight:500}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{padding:8px 14px;border:1px solid var(--line);background:var(--surface);border-radius:4px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.range{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.range input{width:84px;padding:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:4px;font-family:var(--f-mono)}
+.hint{font-size:.85rem;color:var(--muted);margin:0}
+.btn{padding:10px 18px;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.quiz{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:20px;align-items:start}
+@media (max-width:820px){.quiz{grid-template-columns:minmax(0,1fr)}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.stars{color:var(--accent);letter-spacing:1px}
+.tag{border:1px solid var(--accent);color:var(--accent);padding:0 8px;border-radius:99px;font-weight:700;font-size:.75rem}
+.qhead{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px}
+.qno{font-family:var(--f-mono);font-size:1.6rem;font-weight:500;line-height:1.3}
+.qtext{font-weight:500;font-size:1.05rem;overflow-wrap:anywhere}
+.fig{margin:14px 0 0;padding:12px 14px;border:1px dashed var(--muted);border-radius:4px;font-size:.9rem;background:var(--note);overflow-wrap:anywhere}
+.figsvg{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:10px}
+.figsvg svg{display:block;width:100%;max-width:460px;height:auto;margin-inline:auto;color:var(--ink)}
+.figsvg svg path,.figsvg svg rect,.figsvg svg circle{stroke:currentColor;stroke-width:1.5;fill:none}
+.figsvg svg rect,.figsvg svg circle.term{fill:var(--surface)}
+.figsvg svg circle.dot{fill:currentColor;stroke:none}
+.figsvg svg circle.thick{stroke-width:2.8}
+.figsvg svg .flt{stroke:var(--bad);stroke-width:2.2}
+.figsvg svg text{fill:currentColor;stroke:none;font-size:11px;font-family:var(--f-body)}
+.fig .cap{font-size:.8rem;color:var(--muted)}
+.fig b{display:block;font-size:.75rem;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.opts{display:grid;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+.opt{width:100%;text-align:left;display:grid;grid-template-columns:2rem minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);background:var(--surface);border-radius:4px;overflow-wrap:anywhere}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .no{font-family:var(--f-mono);color:var(--muted)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default;color:inherit}
+.verdict{margin-top:16px;font-weight:700}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.exp{margin-top:12px;border-top:2px solid var(--ink);padding-top:12px;font-size:.95rem;overflow-wrap:anywhere}
+.exp .tt{display:inline-block;font-size:.75rem;font-weight:700;background:var(--ink);color:var(--bg);padding:0 8px;border-radius:2px;margin-bottom:6px}
+.exp p{margin:0 0 6px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;margin-top:20px}
+.side{position:sticky;top:12px;display:grid;gap:12px}
+@media (max-width:820px){.side{position:static}}
+.side h3{margin:0;font-size:.85rem;color:var(--muted);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.grid button{aspect-ratio:1;border:1px solid var(--line);background:var(--surface);border-radius:4px;font-family:var(--f-mono);font-size:.8rem;padding:0}
+.grid button.ans{background:var(--accent-soft);border-color:var(--accent)}
+.grid button.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.grid button.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.grid button.cur{outline:2px solid var(--ink);outline-offset:1px;font-weight:700}
+.prog{font-family:var(--f-mono);font-size:.85rem}
+.result{display:grid;gap:14px}
+.score{font-family:var(--f-mono);font-size:2.4rem;line-height:1.1}
+.score small{font-size:1rem;color:var(--muted)}
+.pass{font-weight:700}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+math{font-size:1.08em}
+math[display="block"]{margin-block:6px;text-align:left}
+.scroll{overflow-x:auto;max-width:100%}
+@media (prefers-reduced-motion:no-preference){.opt,.btn{transition:background .12s,border-color .12s}}
+.tbl{border-collapse:collapse;margin:8px 0;font-size:.9rem;min-width:100%}
+.tbl th,.tbl td{border:1px solid var(--line);padding:6px 10px;text-align:center;overflow-wrap:anywhere}
+.tbl thead th{background:var(--accent-soft)}
+.tbl tbody th{background:var(--bg);font-weight:500}
+.qtbl{margin-top:12px}
+.grid button.wide{font-size:.68rem}
+.opt svg{color:var(--ink)}
+/* ---- 가독성·색상 개선 ---- */
+:root{--c5:#1D4E89;--c6:#0E7C6B;--star:#D99200;--hot:#C8400A;--exp-bg:#F4F8FC;--q-bg:#F2F7FC}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c5:#7FB2EC;--c6:#5FD0BC;--star:#F2C14E;--hot:#FF9A62;--exp-bg:#1B2832;--q-bg:#1B2832}}
+:root[data-theme="dark"]{--c5:#7FB2EC;--c6:#5FD0BC;--star:#F2C14E;--hot:#FF9A62;--exp-bg:#1B2832;--q-bg:#1B2832}
+.qcard{--cc:var(--accent);border-top:5px solid var(--cc);padding:22px}
+.qcard.ch5{--cc:var(--c5)} .qcard.ch6{--cc:var(--c6)}
+.meta{gap:8px 10px;margin-bottom:16px;font-size:.82rem}
+.tag{border-width:1.5px;padding:1px 10px}
+.tag.chip{background:var(--cc);border-color:var(--cc);color:var(--accent-ink)}
+.tag.hot{background:var(--hot);border-color:var(--hot);color:var(--accent-ink)}
+.stars{color:var(--star);font-size:1rem;letter-spacing:2px}
+.qhead{background:var(--q-bg);border:1px solid var(--line);border-left:6px solid var(--cc);border-radius:6px;padding:16px 18px;gap:16px;align-items:start}
+.qno{color:var(--cc);font-size:2rem;font-weight:700;line-height:1.2}
+.qtext{font-size:1.12rem;line-height:1.9;font-weight:500}
+.qtext p{margin:0 0 6px} .qtext p:last-child{margin-bottom:0}
+math{font-size:1.12em}
+.opts{gap:10px;margin-top:20px}
+.opt{padding:12px 14px;line-height:1.7;grid-template-columns:2.1rem minmax(0,1fr);align-items:center;border-width:1.5px;border-radius:8px}
+.opt .no{display:inline-flex;align-items:center;justify-content:center;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--f-body);font-weight:700;font-size:.95rem}
+.opt:hover:not(:disabled){background:var(--accent-soft)}
+.opt.sel .no{background:var(--accent);color:var(--accent-ink)}
+.opt.right .no{background:var(--ok);color:var(--surface)}
+.opt.wrong .no{background:var(--bad);color:var(--surface)}
+.verdict{padding:10px 14px;border-radius:6px;font-size:1.02rem}
+.verdict.ok{background:var(--ok-soft)} .verdict.bad{background:var(--bad-soft)}
+.exp{background:var(--exp-bg);border:1px solid var(--line);border-top:4px solid var(--cc);border-radius:6px;padding:16px 18px;line-height:1.85}
+.exp .tt{background:var(--cc);color:var(--accent-ink);padding:1px 12px;border-radius:99px;margin-bottom:10px}
+.exp b{color:var(--cc)}
+.fig{border-radius:6px}
+.figsvg{border-radius:6px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>전력공학 5·6장 CBT</h1>
+    <span class="sub">5장 고장계산 및 안정도 01–62 · 6장 중성점 접지방식 01–51</span>
+  </header>
+  <main id="app"></main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+const r = String.raw;
+/* n:번호, s:별 개수, src:출처, f:집중공략, q:문제, fig:그림 설명, o:보기, a:정답, e:해설 */
+const Q5 = [
+{n:1,s:2,src:'기사 04년 1회',
+ q:r`3본의 송전선에 동상의 전류가 흘렀을 경우 이 전류를 무슨 전류라 하는가?`,
+ o:[r`영상전류`,r`평형전류`,r`단락전류`,r`대칭전류`],a:1,
+ e:r`영상전류는 같은 크기와 동일한 위상각의 차를 가진 불평형전류로, 통신선에 대한 전자유도장해를 발생시킨다.
+영상전류 $I_0=\dfrac{1}{3}(I_a+I_b+I_c)$`},
+
+{n:2,s:4,f:1,src:'기사 91년 7회, 03년 3회, 18년 1회 / 산업 13년 3회',
+ q:r`A, B 및 C상 전류를 각각 $\dot I_a$, $\dot I_b$ 및 $\dot I_c$라 할 때 $I_x=\dfrac{1}{3}(I_a+a^2I_b+aI_c)$, $a=-\dfrac{1}{2}+j\dfrac{\sqrt{3}}{2}$ 으로서 표시되는 $I_x$는 어떤 전류인가?`,
+ o:[r`정상전류`,r`역상전류`,r`영상전류`,r`역상전류와 영상전류의 합계`],a:2,
+ e:r`**불평형에 의한 고조파전류**
+㉠ 영상전류 : $I_0=\dfrac{1}{3}(I_a+I_b+I_c)$
+㉡ 정상전류 : $I_1=\dfrac{1}{3}(I_a+aI_b+a^2I_c)$
+㉢ 역상전류 : $I_2=\dfrac{1}{3}(I_a+a^2I_b+aI_c)$`},
+
+{n:3,s:4,src:'기사 95년 4회, 98년 4회, 17년 1회',
+ q:r`송전선로의 정상·역상 및 영상 임피던스를 각각 $Z_1$, $Z_2$ 및 $Z_0$라 할 때 옳은 것은?`,
+ o:[r`$Z_1=Z_2=Z_0$`,r`$Z_1=Z_2\gt Z_0$`,r`$Z_1\gt Z_2=Z_0$`,r`$Z_1=Z_2\lt Z_0$`],a:4,
+ e:r`**송전선로의 임피던스**
+$Z_1=Z_2\lt Z_0$`},
+
+{n:4,s:2,src:'기사 93년 5회, 05년 4회, 06년 1회, 17년 1회',
+ q:r`그림과 같은 회로의 영상·정상·역상 임피던스 $\dot Z_0$, $\dot Z_1$, $\dot Z_2$는?`,
+ fig:r`3상 회로. a, b, c 각 상의 선로에 임피던스 $Z$가 직렬로 접속되어 있고, 세 상의 중성점은 임피던스 $Z_n$을 통해 대지에 접지되어 있다.`,
+ o:[r`$\dot Z_0=3\dot Z+\dot Z_n,\ \dot Z_1=3\dot Z,\ \dot Z_2=\dot Z$`,
+    r`$\dot Z_0=3\dot Z_n,\ \dot Z_1=\dot Z_1,\ \dot Z_2=3\dot Z$`,
+    r`$\dot Z_0=\dot Z+\dot Z_n,\ \dot Z_1=\dot Z_2=\dot Z+3\dot Z_n$`,
+    r`$\dot Z_0=\dot Z+3\dot Z_n,\ \dot Z_1=\dot Z_2=\dot Z$`],a:4,
+ e:r`1선 지락 시 영상전류는 접지선을 통해 대지로 흐르므로 영상 임피던스는 $\dot Z_0=\dot Z+3\dot Z_n$으로 표현되고 정상 임피던스와 역상 임피던스는 $\dot Z_1=\dot Z_2=\dot Z$으로 표현된다.`},
+
+{n:5,s:4,src:'기사 19년 3회 / 산업 04년 2회, 19년 1회',
+ q:r`중성점 저항접지방식에서 1선 지락 시 영상전류를 $I_0$라고 할 때 저항을 통하는 전류는 어떻게 표현되는가?`,
+ o:[r`$\dfrac{1}{3}I_0$`,r`$\sqrt{3}\,I_0$`,r`$3I_0$`,r`$6I_0$`],a:3,
+ efig:1,
+ e:r`그림과 같이 a상에 지락사고가 발생하고 b와 c상이 개방되었다면
+$V_a=0,\ I_b=I_c=0$이므로
+$I_0+a^2I_1+aI_2=I_0+aI_1+a^2I_2=0$
+따라서, $I_0=I_1=I_2$
+a상의 지락전류 $I_g=I_a=I_0+I_1+I_2=3I_0$
+$=\dfrac{3E_a}{Z_0+Z_1+Z_2}$`},
+
+{n:6,s:5,f:1,src:'기사 91년 5회, 05년 2회 / 산업 17년 1회',
+ q:r`선간단락고장을 대칭좌표법으로 해석할 경우 필요한 것 모두를 나열한 것은?`,
+ o:[r`정상 임피던스 및 역상 임피던스`,r`정상 임피던스 및 영상 임피던스`,r`역상 임피던스 및 영상 임피던스`,r`영상 임피던스`],a:1,
+ e:r`**선로고장 시 대칭좌표법으로 해석할 경우 필요사항**
+㉠ 1선 지락 : 영상 임피던스, 정상 임피던스, 역상 임피던스
+㉡ 선간단락 : 정상 임피던스, 역상 임피던스
+㉢ 3선 단락 : 정상 임피던스`},
+
+{n:7,s:4,src:'기사 90년 2회, 12년 3회',
+ q:r`3상 동기발전기단자에서의 고장전류계산 시 영상전류 $I_0$와 정상전류 $I_1$ 및 역상전류 $I_2$가 같은 경우는?`,
+ o:[r`1선 지락`,r`2선 지락`,r`선간단락`,r`2상 단락`],a:1,
+ e:r`1선 지락고장 시
+$I_0=I_1=I_2,\ I_g=3I_0=\dfrac{3E_a}{Z_0+Z_1+Z_2}$`},
+
+{n:8,s:3,src:'기사 93년 5회, 03년 4회, 12년 2회, 17년 3회',
+ q:r`송·배전 선로의 고장전류의 계산에서 영상 임피던스가 필요한 경우는?`,
+ o:[r`3상 단락계산`,r`3선 단선계산`,r`1선 지락계산`,r`선간단락계산`],a:3,
+ e:r`**선로고장 시 대칭좌표법으로 해석할 경우 필요사항**
+㉠ 1선 지락 : 영상 임피던스, 정상 임피던스, 역상 임피던스
+㉡ 선간단락 : 정상 임피던스, 역상 임피던스
+㉢ 3선 단락 : 정상 임피던스`},
+
+{n:9,s:1,src:'산업 97년 6회',
+ q:r`3상 단락사고가 발생한 경우 옳지 않은 것은? (단, $V_0$ : 영상전압, $V_1$ : 정상전압, $V_2$ : 역상전압, $I_0$ : 영상전류, $I_1$ : 정상전류, $I_2$ : 역상전류)`,
+ o:[r`$V_2=V_0=0$`,r`$V_2=I_2=0$`,r`$I_2=I_0=0$`,r`$I_1=I_2=0$`],a:4,
+ e:r`3상 단락사고가 일어나면 $V_a=V_b=V_c=0$이므로
+$I_0=I_2=V_0=V_1=V_2=0$
+$\therefore\ I_1=\dfrac{E_a}{Z_1}\neq 0$`},
+
+{n:10,s:1,src:'기사 95년 4회',
+ q:r`송전선로의 고장전류계산에서 변압기의 결선상태(Δ-Δ, Δ-Y, Y-Δ, Y-Y)와 중성점 접지상태(접지 또는 비접지, 접지 시에는 접지 임피던스값)를 알아야 할 경우는?`,
+ o:[r`3상 단락`,r`선간단락`,r`1선 접지`,r`3선 단선`],a:3,
+ e:r`㉠ 3상 단락전류 $I_1=\dfrac{E_a}{Z_1}$
+　여기서, $Z_1$ : 정상분 임피던스
+㉡ 선간단락전류 $I_1=-I_2=\dfrac{E_a}{Z_1+Z_2}$
+　여기서, $Z_1$ : 정상분 임피던스, $Z_2$ : 역상분 임피던스
+㉢ 1선 접지전류 $I_g=\dfrac{3E_a}{Z_0+Z_1+Z_2}$
+　여기서, $Z_0$ : 영상분 임피던스
+　　　　　$Z_1$ : 정상분 임피던스
+　　　　　$Z_2$ : 역상분 임피던스`},
+
+{n:11,s:5,f:1,src:'기사 96년 4회, 00년 2·4회, 04년 3·4회, 07년 1회, 14년 1회 / 산업 15년 2회',
+ q:r`그림과 같은 3상 발전기가 있다. a상이 지락한 경우 지락전류는 얼마인가? (단, $Z_0$, $Z_1$, $Z_2$는 영상·정상·역상 임피던스이다)`,
+ fig:r`3상 발전기(기전력 $E_a$, $E_b$, $E_c$). a상이 대지로 지락되어 $I_a$가 흐르고, b상과 c상은 개방($I_b$→$V_b$, $I_c$→$V_c$)되어 있다.`,
+ o:[r`$\dfrac{E_a}{Z_0+Z_1+Z_2}$`,r`$\dfrac{2E_a}{Z_0+Z_1+Z_2}$`,r`$\dfrac{3E_a}{Z_0+Z_1+Z_2}$`,r`$\dfrac{2Z_2E_a}{Z_1+Z_2}$`],a:3,
+ e:r`1선 지락사고 시 전류
+$I_0=I_1=I_2,\ I_g=3I_0=\dfrac{3E_a}{Z_0+Z_1+Z_2}$[A]`},
+
+{n:12,s:2,src:'기사 96년 2회, 98년 5회, 03년 1회, 16년 1회',
+ q:r`다음 그림과 같은 전력계통의 약 154[kV] 송전선로에서 고장지락저항 $Z_{gf}$를 통해서 1선 지락고장이 발생되었을 때 고장점에서 본 영상 임피던스[%]는? (단, 그림에서 표시한 임피던스는 모두 동일용량(즉, 100[MVA] 기준으로 환산한 [%]임))`,
+ fig:r`발전기 $G$(내부 임피던스 $Z_G$, 중성점은 $Z_{GN}$을 통해 접지)가 변압기 $T_r$ 11/154[kV]의 저압측(△결선)에 접속되고, 변압기 고압측(Y결선, 중성점 접지)에서 송전선로 $Z_l$이 나온다. 고장점은 고장지락저항 $Z_{gf}$를 통해 대지에 접지된다.`,
+ o:[r`$Z_0=Z_l+Z_t+Z_{gf}+Z_G+Z_{GN}$`,r`$Z_0=Z_l+Z_t+Z_G$`,r`$Z_0=Z_l+Z_t+Z_{gf}$`,r`$Z_0=Z_l+Z_t+3Z_{gf}$`],a:4,
+ e:r`영상전류는 변압기 저압측의 접속이 △결선이므로 영상회로에는 발전기 임피던스($Z_G$), 중성점 임피던스($Z_{GN}$)가 포함되지 않는다.`},
+
+{n:13,s:2,src:'산업 93년 4회, 03년 3회, 12년 3회, 18년 1회',
+ q:r`고장점에서 구한 전 임피던스를 $Z$, 고장점의 성형전압을 $E$라 하면 단락전류는?`,
+ o:[r`$\dfrac{E}{Z}$`,r`$\dfrac{E}{\sqrt{3}\,Z}$`,r`$\dfrac{\sqrt{3}\,E}{Z}$`,r`$\dfrac{3E}{Z}$`],a:1,
+ e:r`단락전류 $I_s=\dfrac{\dfrac{V}{\sqrt{3}}}{Z}=\dfrac{E}{Z}$[A]
+여기서, $V$ : 선간전압, $E$ : 성형전압(대지전압)`},
+
+{n:14,s:1,src:'기사 95년 2회, 99년 3회',
+ q:r`그림과 같은 회로의 영상·정상 및 역상 임피던스 $\dot Z_0$, $\dot Z_1$, $\dot Z_2$는?`,
+ fig:r`a, b, c 3상 선로. 각 상에 임피던스 $\dot Z$가 직렬로 접속되고, 각 상과 대지 사이에는 커패시터 $C$가 접속되어 있다. 중성점은 임피던스 $\dot Z_n$을 통해 접지되어 있다.`,
+ o:[r`$\dot Z_0=\dfrac{\dot Z+3\dot Z_n}{1+j\omega C(\dot Z+3\dot Z_n)}$
+$\dot Z_1=\dot Z_2=\dfrac{\dot Z}{1+j\omega C\dot Z}$`,
+    r`$\dot Z_0=\dfrac{3\dot Z_n}{1+j\omega C(3\dot Z+\dot Z_n)}$
+$\dot Z_1=\dot Z_2=\dfrac{3\dot Z_n}{1+j\omega C\dot Z}$`,
+    r`$\dot Z_0=\dfrac{\dot Z+\dot Z_n}{1+j\omega C(\dot Z+\dot Z_n)}$
+$\dot Z_1=\dot Z_2=\dfrac{\dot Z}{1+j3\omega C\dot Z_n}$`,
+    r`$\dot Z_0=\dfrac{3\dot Z}{1+j\omega C(\dot Z+\dot Z_n)}$
+$\dot Z_1=\dot Z_2=\dfrac{3\dot Z}{1+j3\omega C\dot Z}$`],a:1,
+ e:r`㉠ 정상 및 역상 등가회로 (커패시터 $C$와 임피던스 $Z$가 병렬)
+$\dot Z_1=\dot Z_2=\dfrac{1}{\dfrac{1}{Z}+\dfrac{1}{\dfrac{1}{j\omega C}}}=\dfrac{\dot Z}{1+j\omega C\dot Z}$
+
+㉡ 영상 등가회로 ($Z$와 $3Z_n$이 직렬로 된 가지에 커패시터 $C$가 병렬)
+영상 임피던스
+$\dot Z_0=\dfrac{1}{\dfrac{1}{\dot Z+3\dot Z_n}+\dfrac{1}{\dfrac{1}{j\omega C}}}=\dfrac{\dot Z+3\dot Z_n}{1+j\omega C(\dot Z+3\dot Z_n)}$`},
+
+{n:15,s:2,src:'산업 94년 4회, 12년 2회, 15년 3회',
+ q:r`송전선로의 저항을 $R$, 리액턴스를 $X$라 하면 다음 어느 식이 성립하는가?`,
+ o:[r`$R\gt X$`,r`$R\lt X$`,r`$R=X$`,r`$R\le X$`],a:2,
+ e:r`송전선로에서 일반적으로 리액턴스가 저항에 비해서 크게 나타난다.`},
+
+{n:16,s:2,f:1,src:'기사 93년 5회, 00년 6회, 05년 1회',
+ q:r`단락전류는 다음 중 어느 것을 말하는가?`,
+ o:[r`앞선 전류`,r`뒤진 전류`,r`충전전류`,r`누설전류`],a:2,
+ e:r`선로에서 인덕턴스가 정전용량보다 크므로 사고 시 발생하는 단락전류는 지상전류가 된다.`},
+
+{n:17,s:4,src:'기사 96년 4회, 99년 4회 / 산업 95년 6회, 98년 3회',
+ q:r`단락전류를 제한하기 위한 것은?`,
+ o:[r`동기조상기`,r`분로 리액터`,r`전력용 콘덴서`,r`한류 리액터`],a:4,
+ e:r`한류 리액터는 선로에 직렬로 설치한 리액터로, 단락사고 시 발전기에 전기자반작용이 일어나기 전 커다란 초발단락전류가 흐르므로 이를 제한하기 위해 설치하는 리액터이다.`},
+
+{n:18,s:5,f:1,src:'기사 14년 3회, 15년 3회, 16년 3회, 18년 1회 / 산업 96년 7회, 01년 3회',
+ q:r`한류 리액터를 사용하는 가장 큰 목적은?`,
+ o:[r`충전전류의 제한`,r`접지전류의 제한`,r`누설전류의 제한`,r`단락전류의 제한`],a:4,
+ e:r`**한류 리액터**
+선로의 단락사고 시 일시적으로 발생하는 단락전류를 제한하여 차단기의 용량을 감소하기 위해 선로에 직렬로 설치한다.`},
+
+{n:19,s:1,src:'기사 05년 1회',
+ q:r`PF·S형 큐비클식 고압 수전반설비에서 고압 전로의 단락보호용으로 사용하는 전력 퓨즈는?`,
+ o:[r`인입형`,r`방출형`,r`한류형`,r`애자형`],a:3,
+ e:r`PF·S형은 개폐기와 전력 퓨즈를 인입구 개폐설비로 사용하는 형식으로, 차단기의 생략이 가능하여 선로사고 시에 흐르는 단락전류를 전력 퓨즈가 제한하여 설비를 보호한다.`},
+
+{n:20,s:1,src:'기사 16년 1회',
+ q:r`단락용량 5000[MVA]인 모선 전압이 154[kV]라면 등가 모선 임피던스는 약 몇 [Ω]인가?`,
+ o:[r`2.54`,r`4.74`,r`6.34`,r`8.24`],a:2,
+ e:r`단락용량 $P_s=\sqrt{3}\,V_nI_s$[MVA]
+단락전류 $I_s=\dfrac{P_s}{\sqrt{3}\,V_n}=\dfrac{5000\times10^3}{\sqrt{3}\times154}=18745.14$[A]
+등가 모선 임피던스 $Z_s=\dfrac{E}{I_s}=\dfrac{\dfrac{154000}{\sqrt{3}}}{18745}=4.74$[Ω]`},
+
+{n:21,s:2,src:'기사 05년 2회, 15년 1회',
+ q:r`%임피던스에 대한 설명으로 틀린 것은?`,
+ o:[r`단위를 가지지 않는다.`,r`절대량이 아닌 기준량에 대한 비를 나타낸 것이다.`,r`기기용량의 크기와 관계없이 일정한 범위로 사용한다.`,r`변압기나 동기기의 내부 임피던스만 사용할 수 있다.`],a:4,
+ e:r`**%임피던스법**
+㉠ 전력계통의 선로 및 기기의 전압·전류·전력에 백분율[%]을 적용하여 계산하는 방법이다.
+㉡ 임피던스법의 특징
+• 값이 단위를 가지지 않으므로 계산 도중 단위의 환산이 필요없다.
+• 식이 간단해진다.
+• 기기용량의 대소에 관계없이 그 값이 일정한 범위 내에 들어가기 때문에 기억하기 쉽다.`},
+
+{n:22,s:4,f:1,src:'산업 91년 2회, 01년 1회, 04년 1회',
+ q:r`3상 변압기의 Impedance가 $Z$[Ω]이고 선간전압이 $V$[kV], 정격용량이 $P$[kVA]일 때 이 변압기와 퍼센트 임피던스는?`,
+ o:[r`$\dfrac{10PZ}{V}$`,r`$\dfrac{PZ}{10V^2}$`,r`$\dfrac{PZ}{100V^2}$`,r`$\dfrac{PZ}{V}$`],a:2,
+ e:r`퍼센트 임피던스 $\%Z=\dfrac{I_nZ}{V}\times100=\dfrac{P\cdot Z}{10\cdot V^2}$[%]
+여기서, $V$ : 대지전압[kV]
+　　　　$P$ : 정격용량[kVA]`},
+
+{n:23,s:2,src:'산업 93년 6회',
+ q:r`송전선로에서 가장 많이 발생되는 사고는?`,
+ o:[r`단선사고`,r`단락사고`,r`지지물 전복사고`,r`지락사고`],a:4,
+ e:r`송전선로 운용 중 수목이나 조류에 의한 지락사고가 가장 많이 발생한다.`},
+
+{n:24,s:4,f:1,src:'기사 93년 2회, 05년 1회, 13년 2·3회, 18년 3회(유사) / 산업 19년 3회',
+ q:r`3상 3선식 송전선로에서 정격전압이 66[kV]이고 1선당 리액턴스가 17[Ω]일 때 이를 100[MVA] 기준으로 환산한 %리액턴스는?`,
+ o:[r`35`,r`39`,r`45`,r`49`],a:2,
+ e:r`퍼센트 리액턴스 $\%X=\dfrac{P_nX}{10V_n^2}$
+여기서, $V_n$ : 정격전압[kV]
+　　　　$P_n$ : 정격용량[kVA]
+$\%X=\dfrac{P_nX}{10V_n^2}=\dfrac{100000\times17}{10\times66^2}=39.02$[%]`},
+
+{n:25,s:2,src:'기사 19년 1회',
+ q:r`선간전압이 154[kV]이고, 1상당의 임피던스가 $j8$[Ω]인 기기가 있을 때 기준용량을 100[MVA]로 하면 %임피던스는 약 몇 [%]인가?`,
+ o:[r`2.75`,r`3.15`,r`3.37`,r`4.25`],a:3,
+ e:r`퍼센트 임피던스 $\%Z=\dfrac{P_nZ}{10V_n^2}$
+여기서, $V_n$ : 정격전압[kV]
+　　　　$P_n$ : 정격용량[kVA]
+임피던스 $Z=0+j8$[Ω]에서 $Z=j8$[Ω]이므로
+$\%Z=\dfrac{P_nZ}{10V_n^2}=\dfrac{100000\times8}{10\times154^2}=3.37$[%]`},
+
+{n:26,s:3,src:'기사 93년 1회, 94년 2회 / 산업 16년 3회',
+ q:r`154/22.9[kV], 40[MVA] 3상 변압기의 %리액턴스가 14[%]라면 고압측으로 환산한 리액턴스는 몇 [Ω]인가?`,
+ o:[r`95`,r`83`,r`75`,r`61`],a:2,
+ e:r`퍼센트 리액턴스 $\%X=\dfrac{I_nX}{V}\times100=\dfrac{PX}{10V_n^2}$[%]
+여기서, $V_n$ : 정격전압[kV]
+　　　　$P_n$ : 정격용량[kVA]
+고압측의 선로 리액턴스 $X=\dfrac{10V_n^2}{P}\times\%X$
+$=\dfrac{10\times154^2}{40000}\times14$
+$=83$[Ω]`},
+
+{n:27,s:3,src:'기사 97년 6회, 03년 1회',
+ q:r`변압기의 %임피던스가 표준값보다 훨씬 클 때 고려하여야 할 문제점은?`,
+ o:[r`온도상승`,r`여자돌입전류`,r`기계적 충격`,r`전압변동률`],a:4,
+ e:r`%임피던스의 크기가 전압변동률과 같으므로 %임피던스가 클 경우 전압변동률을 고려해야 한다.`},
+
+{n:28,s:2,src:'기사 97년 7회, 15년 3회',
+ q:r`전압 $V_1$[kV]에 대한 [%]값이 $X_{P_1}$이고, 전압 $V_2$[kV]에 대한 [%]값이 $X_{P_2}$일 때 이들 사이에는 다음 중 어떤 관계가 있는가?`,
+ o:[r`$X_{P_1}=\dfrac{V_1^{\,2}}{V_2}X_{P_2}$`,r`$X_{P_1}=\dfrac{V_1}{V_2^{\,2}}X_{P_2}$`,r`$X_{P_1}=\dfrac{V_2^{\,2}}{V_1}X_{P_2}$`,r`$X_{P_1}=\dfrac{V_2}{V_1^{\,2}}X_{P_2}$`],a:3,
+ e:r`퍼센트 리액턴스 $\%X=\dfrac{PX}{10V^2}$이므로
+전압 $V_1$에 대한 퍼센트 임피던스 $X_{P_1}=\dfrac{PX}{10V_1^2}$
+전압 $V_2$에 대한 퍼센트 임피던스 $X_{P_2}=\dfrac{PX}{10V_2^2}$
+$\dfrac{X_{P_1}}{X_{P_2}}=\dfrac{\dfrac{PX}{10V_1^2}}{\dfrac{PX}{10V_2^2}}=\dfrac{V_2^2}{V_1^2}$ 에서
+$X_{P_1}=\dfrac{V_2^2}{V_1^2}\cdot X_{P_2}$`},
+
+{n:29,s:1,src:'산업 90년 6회',
+ q:r`154[kV] 계통에 접속된 용량 80000[kVA]의 변압기의 %임피던스가 8[%]이다. 이것을 100000[kVA] 기준으로 고치면 임피던스값은 몇 [Ω]이 되겠는가?`,
+ o:[r`23.7`,r`29.6`,r`33.3`,r`36.7`],a:1,
+ e:r`80000[kVA] %임피던스가 8[%]일 때 100000[kVA]의 경우 $\%Z$는 용량에 비례하므로
+$\%Z=8\times\dfrac{100000}{80000}=10$[%]
+따라서, $\%Z=\dfrac{PZ}{10V^2}$ 에서
+임피던스 $Z=\dfrac{10V^2}{P}\times\%Z$
+$=\dfrac{10\times154^2}{100000}\times10=23.716$[Ω]`},
+
+{n:30,s:2,src:'',
+ q:r`어느 발전소의 발전기는 그 정격이 13.2[kV], 93000[kVA], 95[%] $Z$라고 명판에 쓰여 있다. 이것은 약 몇 [Ω]인가?`,
+ o:[r`1.2`,r`1.8`,r`1200`,r`1780`],a:2,
+ e:r`$\%Z=\dfrac{PZ}{10V^2}$ 에서
+선로 임피던스 $Z=\dfrac{10V^2}{P}\times\%Z$
+$=\dfrac{10\times13.2^2\times95}{93000}=1.77$[Ω]`},
+
+{n:31,s:4,f:1,src:'기사 91년 2회, 96년 2회, 04년 4회',
+ q:r`선로의 3상 단락전류는 대개 다음과 같은 식으로 구한다. 여기에서 $I_n$은 무엇인가?
+$$I_s=\dfrac{100}{\%Z_T+\%Z_L}\cdot I_n$$`,
+ o:[r`그 선로의 평균전류`,r`그 선로의 최대 전류`,r`전원변압기의 선로측 정격전류(단락측)`,r`전원변압기의 전원측 정격전류`],a:3,
+ e:r`3상 단락전류 $I_s=\dfrac{100}{\%Z_T+\%Z_L}\cdot I_n$[A]
+여기서, $I_s$ : 3상 단락전류
+　　　　$\%Z_T$ : 변압기의 %임피던스
+　　　　$\%Z_L$ : 선로의 %임피던스`},
+
+{n:32,s:2,src:'기사 95년 6회',
+ q:r`정격용량 3000[kVA], 정격 2차 전압 6[kV], %임피던스 5[%]인 3상 변압기의 2차 단락전류는 약 몇 [A]인가?`,
+ o:[r`5770`,r`6770`,r`7770`,r`8770`],a:1,
+ e:r`2차측 단락전류 $I_s=\dfrac{100}{\%Z}\times I_n=\dfrac{100}{5}\times\dfrac{3000}{\sqrt{3}\times6}=5773.6$[A]`},
+
+{n:33,s:5,f:1,src:'기사 90년 6회, 95년 7회, 00년 4회, 03년 1회 / 산업 90년 2회, 97년 7회',
+ q:r`%임피던스 $Z$를 이용한 3상 단락전류 $I_s$[A]의 계산식은? (단, $I_n$[A]은 정격전류임)`,
+ o:[r`$I_s=\dfrac{100}{\sqrt{3}}\times\%Z\times I_n$`,r`$I_s=\dfrac{\sqrt{3}}{100\times\%Z}\times I_n$`,r`$I_s=\dfrac{100}{\%Z}\times I_n$`,r`$I_s=\dfrac{\sqrt{3}}{100}\times\%Z\times I_n$`],a:3,
+ e:r`3상 단락전류 $I_s=\dfrac{100}{\%Z}\times I_n=\dfrac{100}{\%Z}\times\dfrac{P_n}{\sqrt{3}\,V_n}$[A]
+여기서, $V_n$ : 선간전압`},
+
+{n:34,s:4,src:'기사 16년 1회 / 산업 97년 4회, 03년 1회',
+ q:r`그림과 같은 3상 3선식 전선로의 단락점에 있어서 3상 단락전류는 몇 [A]인가? (단, 22[kV]에 대한 %리액턴스는 4[%], 저항분은 무시한다)`,
+ fig:r`전원(10000[kVA])에서 선로가 나가고, 선로 끝의 단락점에서 3상 단락(×)이 발생한다.`,
+ o:[r`5560`,r`6560`,r`7560`,r`8560`],a:2,
+ e:r`선로 및 기기의 고장계산 시 사용하는 방법은 Ohm법, 퍼센트(%)법이 있다.
+퍼센트(%)법
+단락전류 $I_s=\dfrac{100}{\%X}\times I_n$[A]
+단락용량 $P_s=\dfrac{100}{\%X}\times P_n$[kVA]
+
+정격전류 $I_n=\dfrac{P}{\sqrt{3}\,V_n}=\dfrac{10000}{\sqrt{3}\times22}=262.43$[A]
+$\therefore$ 단락전류 $I_s=\dfrac{100}{\%X}\times I_n=\dfrac{100}{4}\times262.43=6561$[A]`},
+
+{n:35,s:4,src:'기사 17년 3회(유사) / 산업 98년 2회, 04년 4회, 19년 1회',
+ q:r`그림과 같은 3상 송전계통의 송전전압은 22[kV]이다. 지금 1점 P에서 3상 단락했을 때의 발전기에 흐르는 단락전류는 약 몇 [A]인가?`,
+ fig:r`발전기(리액턴스 6[Ω])에서 선로로 연결되며, 선로는 저항 1[Ω]과 리액턴스 5[Ω]가 직렬로 접속되어 있고 그 끝이 P점이다.`,
+ o:[r`725`,r`1150`,r`2300`,r`3725`],a:2,
+ e:r`선로 및 기기의 합성 임피던스 $Z=\sqrt{1^2+(6+5)^2}=11.05$[Ω]
+단락전류 $I_s=\dfrac{E}{Z}=\dfrac{\dfrac{22000}{\sqrt{3}}}{11.05}=1150$[A]`},
+
+{n:36,s:4,f:1,src:'기사 00년 6회, 02년 4회, 12년 1회 / 산업 92년 2회, 12년 1회, 13년 2회(유사)',
+ q:r`단락점까지의 전선 한 줄의 임피던스가 $Z=6+j8$[Ω] 단락 전의 단락점전압이 $E=22.9$[kV]인 단상 선로의 단락용량은 몇 [kVA]인가? (단, 부하전류는 무시한다)`,
+ o:[r`13110`,r`26220`,r`39330`,r`52440`],a:2,
+ e:r`전선로 왕복선의 임피던스 $Z=2(6+j8)$
+$=2\times\sqrt{6^2+8^2}$
+$=20$[Ω]
+단락전류 $I_s=\dfrac{E}{Z}=\dfrac{22900}{20}=1145$[A]
+단락용량 $P_s=EI_s=22.9\times1145=26220$[kVA]`},
+
+{n:37,s:3,src:'산업 92년 5회, 03년 4회, 07년 1회, 16년 1회',
+ q:r`154[kV] 송전계통에서 3상 단락고장이 발생하였을 경우 고장점에서 본 등가 정상 임피던스가 100[MVA] 기준으로 25[%]라고 하면 단락용량은 몇 [MVA]인가?`,
+ o:[r`250`,r`300`,r`400`,r`500`],a:3,
+ e:r`단락용량 $P_s=\dfrac{100}{\%Z}\times P_n$[MVA]
+여기서, $P_n$ : 기준용량
+$P_s=\dfrac{100}{25}\times100=400$[MVA]`},
+
+{n:38,s:2,src:'산업 90년 7회, 95년 4회, 07년 4회',
+ q:r`66[kV] 계통에서 3상 단락고장이 발생하였을 경우 고장점에서 본 등가 정상(正相) 임피던스가 100[MVA] 기준으로 25[%]라고 하면 고장피상전력은 몇 [MVA]가 되는가?`,
+ o:[r`250`,r`300`,r`400`,r`500`],a:3,
+ e:r`차단기용량 $P_s=\dfrac{100}{\%Z}\times P_n$[MVA]
+여기서, $P_n$ : 기준용량
+고장피상전력 $P_s=\dfrac{100}{25}\times100=400$[MVA]`},
+
+{n:39,s:4,src:'기사 93년 4회, 96년 5회, 99년 6회, 03년 2회, 19년 2회',
+ q:r`합성 임피던스 0.4[%](10000[kVA] 기준)인 개소에 설치하는 차단기의 필요차단용량은 몇 [MVA]인가?`,
+ o:[r`40`,r`250`,r`400`,r`2500`],a:4,
+ e:r`차단기용량 $P_s=\dfrac{100}{\%Z}\times P$
+$=\dfrac{100}{0.4}\times10000\times10^{-3}$
+$=2500$[MVA]`},
+
+{n:40,s:5,f:1,src:'기사 90년 7회, 91년 6회, 96년 4회, 99년 6회, 03년 2회 / 산업 16년 1·3회',
+ q:r`전원으로부터의 합성 임피던스가 0.25[%](10000[kVA] 기준)인 곳에 설치하는 차단기의 용량은 몇 [MVA]인가?`,
+ o:[r`250`,r`400`,r`2500`,r`4000`],a:4,
+ e:r`차단기용량 $P_s=\dfrac{100}{\%Z}\times P_n$
+$=\dfrac{100}{0.25}\times10000$
+$=4000000=4000$[MVA]`},
+
+{n:41,s:2,src:'산업 95년 7회, 18년 3회',
+ q:r`그림과 같은 전선로의 단락용량은 약 몇 [MVA]인가? (단, 그림의 수치는 10000[kVA]를 기준으로 한 %리액턴스를 나타낸다)`,
+ fig:r`전원(발전기) 10[%] — 변압기 3[%] — 모선에서 병렬 2회선 선로(각각 4[%], 4[%])로 부하 쪽($X$)에 연결된다.`,
+ o:[r`33.7`,r`66.7`,r`99.7`,r`133.7`],a:2,
+ e:r`합성 퍼센트 리액턴스 $\%X=\dfrac{4}{2}+3+10=15$[%]
+단락용량 $P_s=\dfrac{100}{\%Z}\times P_n=\dfrac{100}{15}\times10000\times10^{-3}$
+$=66.67$[MVA]`},
+
+{n:42,s:1,src:'기사 92년 3회',
+ q:r`그림과 같이 전압 11[kV], 용량 15[MVA]의 3상 교류발전기 2대와 용량 33[MVA]의 변압기 1대로 된 계통이 있다. 발전기 1대 및 변압기 %리액턴스가 20[%], 10[%]일 때 차단기 ②의 차단용량[MVA]은?`,
+ fig:r`11[kV] 발전기 2대(각 15[MVA], 각 20[%])가 병렬로 접속되고, 차단기 ①, 변압기(10[%]), 차단기 ②를 거쳐 66[kV] 송전선으로 연결된다. 변압기 위에는 T가 표시되어 있다.`,
+ o:[r`80`,r`95`,r`103`,r`125`],a:3,
+ e:r`변압기용량 33[MVA]를 기준용량으로 발전기 및 변압기의 %리액턴스를 환산하여 합산하면 아래와 같다.
+$\%X=10+\dfrac{20}{2}\times\dfrac{33}{15}=32$[%]
+차단기 ②의 차단용량 $P_s=\dfrac{100}{32}\times33=103$[MVA]`},
+
+{n:43,s:2,src:'기사 90년 2회, 95년 6회, 01년 3회',
+ q:r`그림에서 A점의 차단기용량으로 가장 적당한 것은?`,
+ fig:r`공통 모선에 발전기 3대가 접속되어 있다 : 5000[kVA]($X_G=12$[%]) 1대, 10000[kVA]×2대($X_G=15$[%]). 모선에서 변압기 2대(40000[kVA]×2, $X_T=10$[%])가 나가며, 차단기 설치점이 A이다.`,
+ o:[r`50[MVA]`,r`100[MVA]`,r`150[MVA]`,r`200[MVA]`],a:4,
+ e:r`10000[kVA]를 기준용량으로 하였을 때 5000[kVA] 발전기 %리액턴스는 24[%]이므로
+$\%X=\dfrac{1}{\dfrac{1}{24}+\dfrac{1}{15}+\dfrac{1}{15}}=5.71$[%]
+A점의 차단용량 $P_s=\dfrac{100}{5.71}\times10000\times10^{-3}=175$[MVA]
+계산상 175[MVA]이지만 보기에 없으므로 정답선정 시 계산값을 포함하는 200[MVA]를 답으로 한다.`},
+
+{n:44,s:2,src:'기사 93년 4회, 95년 5회, 12년 2회',
+ q:r`그림과 같은 전력계통에서 A점에 설치된 차단기의 단락용량은 몇 [MVA]인가? (단, 각 기기의 리액턴스는 발전기 $G_1$, $G_2$=15[%](정격용량 15[MVA]기준), 변압기=8[%](정격용량 20[MVA] 기준), 송전선=11[%](정격용량 10[MVA]기준)이며 기타 다른 정수는 무시한다)`,
+ fig:r`발전기 $G_1$(15[MVA], 15[%])과 $G_2$(15[MVA], 15[%])가 병렬로 변압기 TR(8[%], 20[MVA])에 접속되고, 이어서 송전선(11[%], 10[MVA] 기준)을 거쳐 A점의 차단기에 이른다.`,
+ o:[r`20`,r`30`,r`40`,r`50`],a:4,
+ e:r`15[MVA]를 기준용량으로 하였을 때 계통의 %리액턴스
+$\%X=\dfrac{15}{2}+8\times\dfrac{15}{20}+11\times\dfrac{15}{10}=30$[%]
+A점 차단기의 단락용량 $P_s=\dfrac{100}{30}\times15=50$[MVA]`},
+
+{n:45,s:2,src:'기사 00년 5회, 01년 2회',
+ q:r`그림에 표시하는 무부하송전선이 S점에서 3상 단락이 일어났을 때 단락전류는 약 몇 [A]인가? (단, 발전기 $G_1$, $G_2$는 각각 15[MVA], 11[kV], 임피던스=30[%]이고 변압기 $T$는 30[MVA], 11[kV]/154[kV], 임피던스=8[%], 변압기와 단락점 사이는 50[km]이고 임피던스는 0.5[Ω/km]이다)`,
+ fig:r`발전기 $G_1$, $G_2$가 병렬로 변압기 $T$(11/154[kV])에 접속되고, 송전선을 거쳐 S점에서 단락(×)된다.`,
+ o:[r`127`,r`254`,r`273`,r`383`],a:3,
+ e:r`변압기 용량 30[MVA]를 기준용량으로 한다.
+선로의 퍼센트 임피던스 $\%Z=\dfrac{PZ}{10V^2}$
+$=\dfrac{30000\times0.5\times50}{10\times154^2}$
+$=3.162$[%]
+발전기의 15[MVA], 30[%]를 30[MVA]의 용량으로 환산하면 $\%Z\propto P_n$이므로 60[%]로 되므로
+단락점에서 본 전체 %임피던스 $\%Z=\dfrac{60}{2}+8+3.16=41.16$[%]
+단락전류 $I_s=\dfrac{100}{\%Z}\times I_n=\dfrac{100}{41.16}\times\dfrac{30000}{\sqrt{3}\times154}=273.2$[A]`},
+
+{n:46,s:1,src:'기사 97년 5회, 02년 4회, 05년 1회',
+ q:r`그림과 같은 154[kV] 송전계통의 F점에서 무부하 시 3상 단락고장이 발생하였을 경우 고장전력은 약 몇 [MVA]인가? (단, 발전기 $G_1$ : 용량 20[MVA], $G_2$ : 용량 30[MVA]의 %과도 리액턴스 및 변압기 $T_r$ : 용량 50[MVA]의 %리액턴스는 각각 자기용량 기준으로 20[%], 20[%], 10[%]이고 변압기에서 고장점 F까지의 선로 리액턴스는 100[MVA] 기준으로 5[%]라고 한다)`,
+ fig:r`발전기 $G_1$(20[MVA], 20[%])과 $G_2$(30[MVA], 20[%])가 병렬로 변압기 $T_r$(11/154[kV], 50[MVA])에 접속되고, 선로(5[%], 100[MVA] 기준)를 거쳐 고장점 F에 이른다.`,
+ o:[r`133`,r`143`,r`154`,r`182`],a:3,
+ e:r`100[MVA]를 기준용량으로 하였을 때 각 기기의 %임피던스는 다음과 같다.
+발전기 $G_1$ : $\%Z_{G_1}=20\times\dfrac{100}{20}=100$[%]
+발전기 $G_2$ : $\%Z_{G_2}=20\times\dfrac{100}{30}=66.7$[%]
+변압기 $T_r$ : $\%Z_{T_r}=10\times\dfrac{100}{50}=20$[%]
+송전선로 $\dfrac{T}{L}$ : $\%Z_{TL}=5\times\dfrac{100}{100}=5$[%]
+고장점 F에서 본 전 %임피던스는
+$\%Z=5+20+\dfrac{100\times66.7}{100+66.7}=65$[%]
+고장전력 $P_s=\dfrac{100}{\%Z}\times P_n$ 이므로
+$P_s=\dfrac{100}{65}\times100=153.8$[MVA]
+※ 그림에는 선로 리액턴스가 10[MVA] 기준으로 인쇄되어 있으나, 문제 본문과 해설에 따라 100[MVA] 기준으로 계산해야 한다.`},
+
+{n:47,s:1,src:'',
+ q:r`그림과 같은 변전소에서 6600[V]의 일정 전압으로 유지되는 단상 2선식 배전선이 있다. 100[kVA]에 대한 %리액턴스가 고압선 8[%] 변압기 4[%] 저압선 6[%]라 하면 저압선측에 단락이 생긴 경우 고압선측에 흐르는 단락전류는 몇 [A]인가?`,
+ fig:r`6600[V] 전원 — 고압선($\%X_H=8$[%]) — 변압기($\%X_T=4$[%]) — 저압선($\%X_L=6$[%]) — 단락(×)`,
+ o:[r`약 84`,r`약 189`,r`약 252`,r`약 378`],a:1,
+ e:r`합성 퍼센트 리액턴스 $\%X=8+4+6=18$[%]
+고압측 단락전류 $I_s=\dfrac{100}{\%X}\times I_m$
+$=\dfrac{100}{18}\times\dfrac{100}{6.6}$
+$=84.17$[A]`},
+
+{n:48,s:1,src:'산업 97년 6회',
+ q:r`100[MVA]의 3상 변압기 2뱅크를 가지고 있는 배전용 2차측의 배전선에 시설할 차단기용량은 몇 [MVA]인가? (단, 변압기는 병렬로 운전되며, 각각의 $\%Z$는 20[%]이고, 전원 임피던스는 무시한다)`,
+ o:[r`1000`,r`2000`,r`3000`,r`4000`],a:1,
+ e:r`2뱅크 변압기의 합성 퍼센트 임피던스는 자기용량을 기준으로 $\dfrac{20}{2}=10$[%]이므로
+차단기용량 $P_s=\dfrac{100}{\%Z}\times P_n=\dfrac{100}{10}\times100$
+$=1000$[MVA]`},
+
+{n:49,s:3,src:'기사 98년 5회, 17년 2회, 19년 2회(유사)',
+ q:r`송전선로의 송전단전압을 $E_S$, 수전단전압을 $E_R$, 송·수전단 전압 사이의 위상차를 $\delta$, 선로의 리액턴스를 $X$라 하면, 선로저항을 무시할 때 송전전력 $P$는 어떤 식으로 표시되는가?`,
+ o:[r`$P=\dfrac{E_S-E_R}{X}$`,r`$P=\dfrac{(E_S-E_R)^2}{X}$`,r`$P=\dfrac{E_SE_R}{X}\sin\delta$`,r`$P=\dfrac{E_SE_R}{X}\tan\delta$`],a:3,
+ e:r`송전전력 $P=\dfrac{E_S\cdot E_R}{X}\sin\delta$[MW]이므로 유도 리액턴스 $X$에 반비례하므로 송전거리가 멀어질수록 감소한다.`},
+
+{n:50,s:4,f:1,src:'기사 00년 5회 / 산업 96년 6회, 98년 5회, 19년 3회',
+ q:r`송전단전압 161[kV], 수전단전압 155[kV], 상차각 40°, 리액턴스가 50[Ω]일 때 선로손실을 무시하면 송전전력은 몇 [MW]인가? (단, $\cos40^\circ=0.766$, $\cos50^\circ=0.643$)`,
+ o:[r`107`,r`321`,r`408`,r`580`],a:2,
+ e:r`송전전력 $P=\dfrac{V_SV_R}{X}\sin\delta$
+$=\dfrac{161\times155}{50}\sin40^\circ=320.9$[MW]`},
+
+{n:51,s:5,f:1,src:'기사 97년 5회, 99년 7회, 01년 3회 / 산업 99년 4회, 05년 3회, 17년 3회',
+ q:r`교류송전에서는 송전거리가 멀어질수록 동일전압에서의 송전가능전력이 적어진다. 그 이유는?`,
+ o:[r`선로의 어드미턴스가 커지기 때문이다.`,r`선로의 유도성 리액턴스가 커지기 때문이다.`,r`코로나 손실이 증가하기 때문이다.`,r`저항손실이 커지기 때문이다.`],a:2,
+ e:r`송전전력 $P=\dfrac{V_SV_R}{X}\sin\delta$[MW]
+여기서, $V_S$ : 송전단전압[kV]
+　　　　$V_R$ : 수전단전압[kV]
+　　　　$X$ : 선로의 유도 리액턴스[Ω]
+따라서 송전거리가 멀어질수록 유도 리액턴스 $X$가 증가하여 송전전력이 감소한다.`},
+
+{n:52,s:2,src:'산업 00년 5회',
+ q:r`송전선로의 정상상태 극한(최대) 송전전력은 선로 리액턴스와 대략 어떤 관계가 성립하는가?`,
+ o:[r`송·수전단 사이의 리액턴스에 반비례한다.`,r`송·수전단 사이의 리액턴스에 비례한다.`,r`송·수전단 사이의 리액턴스의 자승에 비례한다.`,r`송·수전단 사이의 리액턴스의 자승에 반비례한다.`],a:1,
+ e:r`송전전력 $P=\dfrac{V_SV_R}{X}\sin\delta$[MW]에서 정상상태 극한(최대) 송전전력은 송·수전단 사이 선로의 리액턴스에 반비례한다.`},
+
+{n:53,s:3,src:'기사 98년 6회, 02년 4회',
+ q:r`송전선로의 송전용량을 결정할 때 송전용량계수법에 의한 수전전력을 나타낸 식은?`,
+ o:[r`수전전력 $=\dfrac{\text{송전용량계수}\times(\text{수전단선간전압})^2}{\text{송전거리}}$`,
+    r`수전전력 $=\dfrac{\text{송전용량계수}\times\text{수전단선간전압}}{\text{송전거리}}$`,
+    r`수전전력 $=\dfrac{\text{송전용량계수}\times(\text{송전거리})^2}{\text{수전단선간전압}}$`,
+    r`수전전력 $=\dfrac{\text{송전용량계수}\times(\text{수전단전류})^2}{\text{송전거리}}$`],a:1,
+ e:r`송전용량계수법 $P=K\dfrac{E_R^{\,2}}{l}$
+여기서, $P$ : 수전단전력[kW]
+　　　　$E_R$ : 수전단선간전압[kV]
+　　　　$l$ : 송전거리[km]`},
+
+{n:54,s:4,f:1,src:'기사 90년 2회, 96년 2회, 15년 3회 / 산업 13년 2회',
+ q:r`154[kV] 송전선로에서 송전거리가 154[km]라 할 때 송전용량계수법에 의한 송전용량은? (단, 송전용량계수는 1200으로 한다)`,
+ o:[r`61600[kW]`,r`92400[kW]`,r`123200[kW]`,r`184800[kW]`],a:4,
+ e:r`송전용량계수법의 송전용량 $P=K\dfrac{V_R^{\,2}}{L}$[kW]
+여기서, $K$ : 송전용량계수
+　　　　$V_R$ : 수전단전압[kV]
+　　　　$L$ : 송전거리[km]
+송전용량 $P=1200\times\dfrac{154^2}{154}=184800$[kW]`},
+
+{n:55,s:3,src:'산업 04년 2회, 17년 1회',
+ q:r`전력계통 안정도의 종류가 아닌 것은?`,
+ o:[r`상태안정도`,r`정태안정도`,r`과도안정도`,r`동태안정도`],a:1,
+ e:r`**안정도의 종류 및 특성**
+㉠ 정태안정도 : 부하가 서서히 증가한 경우 계속해서 송전할 수 있는 능력으로, 이때의 전력을 정태안정 극한전력이라 한다.
+㉡ 과도안정도 : 계통에 갑자기 부하가 증가하여 급격한 교란상태가 발생하더라도 정전을 일으키지 않고 송전을 계속하기 위한 전력의 최대값을 말한다.
+㉢ 동태안정도 : 차단기 또는 조상설비 등을 설치하여 안정도를 높인 것을 말한다.`},
+
+{n:56,s:4,f:1,src:'산업 94년 7회, 11년 3회, 15년 1회',
+ q:r`정태안정 극한전력이란?`,
+ o:[r`부하가 서서히 증가할 때 극한전력`,r`부하가 갑자기 변할 때 극한전력`,r`부하가 갑자기 사고났을 때 극한전력`,r`부하가 변하지 않을 때 극한전력`],a:1,
+ e:r`**정태안정도**
+부하가 서서히 증가한 경우 계속해서 송전할 수 있는 능력으로, 이때의 전력을 정태안정 극한전력이라 한다.`},
+
+{n:57,s:3,src:'기사 94년 5회, 03년 2회',
+ q:r`과도안정 극한전력이란?`,
+ o:[r`부하가 서서히 감소할 때 극한전력`,r`부하가 서서히 증가할 때 극한전력`,r`부하가 갑자기 사고났을 때 극한전력`,r`부하가 변하지 않을 때 극한전력`],a:3,
+ e:r`**과도안정도**
+계통에 갑자기 부하가 증가하여 급격한 교란상태가 발생하더라도 정전을 일으키지 않고 송전을 계속하기 위한 전력의 최대값을 말한다.`},
+
+{n:58,s:5,f:1,src:'기사 18년 3회(유사) / 산업 91년 5회, 97년 5회, 00년 3회, 04년 1회, 07년 1회',
+ q:r`전력계통의 안정도 향상대책으로 옳은 것은?`,
+ o:[r`송전계통의 전달 리액턴스를 증가시킨다.`,r`재폐로방식(reclosing method)을 채택한다.`,r`전원측 원동기용 조속기의 부동시간을 크게 한다.`,r`고장을 줄이기 위하여 각 계통을 분리시킨다.`],a:2,
+ e:r`**송전전력을 증가시키기 위한 안정도 증진대책**
+㉠ 직렬 리액턴스를 작게 한다.
+• 발전기나 변압기 리액턴스를 작게 한다.
+• 선로에 복도체를 사용하거나 병행회선수를 늘린다.
+• 선로에 직렬 콘덴서를 설치한다.
+㉡ 전압변동을 작게 한다.
+• 단락비를 크게 한다.
+• 속응여자방식을 채용한다.
+㉢ 계통을 연계시킨다.
+㉣ 중간조상방식을 채용한다.
+㉤ 고장구간을 신속히 차단시키고 재폐로방식을 채택한다.
+㉥ 소호 리액터 접지방식을 채용한다.
+㉦ 고장 시에 발전기 입·출력의 불평형을 작게 한다.`},
+
+{n:59,s:4,src:'기사 03년 1회, 13년 2회, 15년 1회, 16년 1회 / 산업 15년 1회, 18년 1회',
+ q:r`송전계통의 안정도를 증진시키는 방법이 아닌 것은?`,
+ o:[r`전압변동을 작게 한다.`,r`직렬 리액턴스를 크게 한다.`,r`제동저항기를 설치한다.`,r`중간조상기방식을 채택한다.`],a:2,
+ e:r`**안정도 향상대책**
+㉠ 송전계통의 전달 리액턴스를 감소한다.
+→ 기기 리액턴스 감소 및 선로에 직렬 콘덴서 설치
+㉡ 송전계통의 전압변동을 작게 한다.
+→ 중간조상방식을 채용하거나 속응여자방식을 채용
+㉢ 계통을 연계하여 운전한다.
+㉣ 제동저항기를 설치한다.
+㉤ 직류송전방식의 이용검토로 안정도문제를 해결한다.`},
+
+{n:60,s:3,src:'산업 01년 2회, 05년 1회',
+ q:r`전력계통의 안정도 향상대책으로 옳지 않은 것은?`,
+ o:[r`계통의 직렬 리액턴스를 낮게 한다.`,r`고속도 재폐로방식을 채용한다.`,r`지락전류를 크게 하기 위하여 직접접지방식을 채용한다.`,r`고속도 차단방식을 채용한다.`],a:3,
+ e:r`직접접지방식은 1선 지락사고 시 대지로 흐르는 지락전류가 다른 접지방식에 비해 너무 커서 안정도가 가장 낮은 접지방식이다.`},
+
+{n:61,s:4,src:'기사 95년 4회, 99년 6회, 00년 4회, 04년 3회',
+ q:r`안정도 향상대책으로 적당하지 않은 것은?`,
+ o:[r`직렬 콘덴서로 선로의 리액턴스를 보상한다.`,r`기기의 리액턴스를 감소한다.`,r`발전기의 단락비를 작게 한다.`,r`계통을 연계한다.`],a:3,
+ e:r`**송전계통의 안정도 향상대책**
+㉠ 보호계전기, 차단기의 동작으로 고속화하여 발전기의 부담을 작게 한다.
+㉡ 고속도 재폐로방식을 채택한다.
+㉢ 직렬 리액턴스를 줄인다.
+㉣ 전압변동을 작게 한다.
+㉤ 고장전류를 줄이고 고장구간을 조속히 차단한다.
+㉥ 고장 시 발전기의 입·출력의 불평형을 줄인다.
+㉦ 중간조상방식을 채용한다.`},
+
+{n:62,s:1,src:'기사 97년 2회',
+ q:r`교류발전기의 전압조정장치로 속응여자방식을 채택하고 있다. 그 목적에 대한 설명 중 틀린 것은?`,
+ o:[r`전력계통에 고장발생 시 발전기의 동기화력을 증가시키기 위함이다.`,r`송전계통의 안정도를 높이기 위함이다.`,r`여자기의 전압상승률을 크게 하기 위함이다.`,r`전압조정용 탭의 수동변환을 원활히 하기 위함이다.`],a:4,
+ e:r`속응여자방식을 사용하면 여자기의 전압상승률은 올릴 수 있고, 고장발생으로 발전기의 전압이 저하하더라도 즉각 응동해서 발전기전압을 일정수준까지 유지시킬 수 있으므로 안정도증진에 기여한다.`},
+];
+
+/* ---------- 회로도 (SVG) ---------- */
+const P=d=>`<path d="${d}"/>`;
+const T=(x,y,s,a='middle')=>`<text x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const sb=(b,s)=>`${b}<tspan dy="3" font-size="8">${s}</tspan>`;
+const RC=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`;
+const CI=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}"/>`;
+const dot=(x,y)=>`<circle class="dot" cx="${x}" cy="${y}" r="2.6"/>`;
+const term=(x,y)=>`<circle class="term" cx="${x}" cy="${y}" r="4"/>`;
+const gnd=(x,y)=>P(`M${x},${y}V${y+6}M${x-10},${y+6}H${x+10}M${x-6},${y+10}H${x+6}M${x-2},${y+14}H${x+2}`);
+const rail=(x1,x2,y)=>{let h='';for(let x=x1+4;x<=x2;x+=8)h+=`M${x},${y}l-5,7`;return P(`M${x1},${y}H${x2}`+h);};
+const coil=(x,y,n=3,r=5)=>P(`M${x},${y}`+`a${r},${r} 0 0 1 ${2*r},0`.repeat(n));
+const coilV=(x,y,n=3,r=5)=>`<g transform="translate(${x},${y}) rotate(90)">${coil(0,0,n,r)}</g>`;
+const cap=(x,y)=>P(`M${x},${y}V${y+8}M${x-8},${y+8}H${x+8}M${x-8},${y+13}H${x+8}M${x},${y+13}V${y+21}`);
+const arrow=(x,y)=>P(`M${x-6},${y-3.5}L${x},${y}L${x-6},${y+3.5}`);
+const fault=(x,y)=>`<path class="flt" d="M${x-6},${y-6}L${x+6},${y+6}M${x+6},${y-6}L${x-6},${y+6}"/>`;
+const gen=(x,y,s='∼',r=14)=>CI(x,y,r)+T(x,y+4,s);
+const zig=(x,y)=>P(`M${x},${y}l5,-8 l10,16 l10,-16 l10,16 l5,-8`);
+const trf=(x,y)=>CI(x-8,y,12)+CI(x+8,y,12);
+const coilS=(x,y,n,r,d)=>`<g transform="translate(${x},${y}) ${d==='L'?'scale(-1,1) ':''}rotate(90)">${coil(0,0,n,r)}</g>`;
+const zzPair=(x,y,vert)=>{const pts=(o)=>{let d=`M${o},-18`;for(let i=1;i<=6;i++)d+=`L${o+(i%2?4:-4)},${-18+i*6}`;return P(d);};
+  return `<g transform="translate(${x},${y})${vert?' rotate(90)':''}">${pts(-5)}${pts(5)}</g>`;};
+const arrow2=(x,y,d)=>d==='u'?P(`M${x-3.5},${y+6}L${x},${y}L${x+3.5},${y+6}`):P(`M${x-3.5},${y-6}L${x},${y}L${x+3.5},${y-6}`);
+const SVG=(w,h,inner,label)=>`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${label}">${inner}</svg>`;
+
+/* 3상 Y결선 + 중성점 임피던스 (4번, 14번 공통) */
+function starCircuit(withCap){
+  let s='';
+  const ys=[30,85,140], nm=['a','b','c'];
+  s+=P('M60,30V140');
+  ys.forEach((y,i)=>{
+    s+=P(`M60,${y}H100`)+RC(100,y-10,40,20)+T(120,y+4,'Z')+P(`M140,${y}H300`)+term(304,y)+T(322,y+4,nm[i]);
+  });
+  s+=dot(60,85)+P('M60,85H30V108')+RC(18,108,24,30)+T(30,127,sb('Z','n'))+P('M30,138V160')+gnd(30,160);
+  if(withCap){
+    [[190,30],[230,85],[270,140]].forEach(([x,y])=>{
+      s+=dot(x,y)+P(`M${x},${y}V160`)+cap(x,160)+T(x+11,174,'C','start');
+    });
+    s+=rail(176,284,198)+P('M190,181V198M230,181V198M270,181V198');
+    return SVG(360,215,s,'Y결선 3상 회로: 각 상에 직렬 임피던스 Z와 대지 커패시터 C, 중성점 임피던스 Zn 접지');
+  }
+  return SVG(360,180,s,'Y결선 3상 회로: 각 상에 직렬 임피던스 Z, 중성점은 Zn으로 접지');
+}
+/* a상 지락 발전기 (5번, 11번 공통) */
+function groundFault(){
+  let s=P('M30,40V200')+rail(30,300,200);
+  const rows=[[40,'a','Ea'],[100,'b','Eb'],[160,'c','Ec']];
+  rows.forEach(([y,ph,e],i)=>{
+    s+=P(`M30,${y}H50`)+coil(50,y,3,6)+T(68,y-10,sb('E',ph));
+    if(i===0){ s+=P(`M86,${y}H300V200`)+arrow(200,y)+T(190,y-8,sb('I',ph),'end')+T(312,y+4,'a','start')+dot(300,200); }
+    else { s+=P(`M86,${y}H236`)+arrow(200,y)+T(190,y-8,sb('I',ph),'end')+P(`M236,${y-8}V${y+8}`)+T(246,y+4,sb('V',ph),'start'); }
+  });
+  s+=fault(300,120)+T(312,124,'지락','start');
+  return SVG(340,220,s,'3상 발전기의 a상 지락 회로: b, c상은 개방');
+}
+const FIG5={
+ 4:()=>starCircuit(false),
+ 5:groundFault, 11:groundFault,
+ 12:()=>{
+  let s=gen(50,70)+T(50,40,sb('Z','G'))+P('M66,70H122')+trf(150,70)
+   +T(132,102,'△')+T(168,102,'Y')+T(150,38,'T<tspan dy="3" font-size="8">r</tspan><tspan dy="-3"> 11/154[kV]</tspan>')
+   +P('M50,86V108')+RC(38,108,24,28)+T(50,126,sb('Z','GN'))+P('M50,136V158')+gnd(50,158)
+   +P('M166,82V150')+gnd(166,150)+T(150,128,sb('Z','t'),'end')
+   +P('M172,70H196')+RC(196,60,44,20)+T(218,74,sb('Z','l'))+P('M240,70H330')+fault(330,70)
+   +dot(290,70)+P('M290,70V108')+RC(278,108,24,28)+T(290,126,sb('Z','gf'))+P('M290,136V158')+gnd(290,158)
+   +T(344,74,'고장점','start');
+  return SVG(400,190,s,'발전기, △-Y 변압기, 송전선로 임피던스와 고장지락저항 Zgf를 통한 1선 지락');
+ },
+ 14:()=>starCircuit(true),
+ 34:()=>SVG(360,100,gen(50,40,'≋')+T(50,78,'10000[kVA]')+P('M64,40H300')+fault(300,40)+T(316,44,'단락','start'),'전원 10000kVA에서 선로 끝 단락'),
+ 35:()=>{
+  let s=gen(50,55,'∼')+T(50,26,'6[Ω]')+T(50,92,'발전기')
+   +P('M64,55H120')+zig(120,55)+P('M160,55H200')+coil(200,55,3,7)+P('M242,55H320')+term(324,55)+T(340,59,'P','start')
+   +T(140,30,'1[Ω]')+T(221,30,'5[Ω]')+P('M120,72V78H280V72')+T(200,94,'선로');
+  return SVG(360,110,s,'발전기 6옴, 선로 저항 1옴과 리액턴스 5옴, 단락점 P');
+ },
+ 41:()=>{
+  let s=CI(45,90,18).replace('<circle','<circle class="thick"')+T(45,95,'≋','middle')+T(45,52,'10[%]')+P('M63,90H205')
+   +coilS(120,66,4,6,'L')+coilS(140,66,4,6,'R')+T(130,50,'3[%]')
+   +P('M205,50V150M305,50V150','')+P('M205,66H305')+T(255,58,'4[%]')+P('M205,120H305')+T(255,112,'4[%]')
+   +P('M305,90H322')+T(335,94,'X')+P('M348,90H395')+arrow(396,90);
+  return SVG(420,165,s,'발전기 10%, 변압기 3%, 4%인 병렬 2회선 선로, 부하 X');
+ },
+ 42:()=>{
+  let s='';
+  [45,125].forEach((y,i)=>{
+   s+=CI(36,y,16).replace('<circle','<circle class="thick"')+T(36,y+5,'≋')+T(36,y+34,i?'2×5':'11[kV]')
+    +P(`M52,${y}H100`)+CI(118,y,18)+T(118,y+5,'G')+T(118,y+34,'20[%]')+P(`M136,${y}H220`);
+  });
+  s+=P('M220,45V125')+dot(220,95)+P('M220,95H245')+RC(245,83,34,24)+T(262,100,'1')+P('M279,95H316')
+   +zzPair(328,95)+T(328,60,'T')+T(328,134,'10[%]')+P('M340,95H366')+RC(366,83,34,24)+T(383,100,'2')+P('M400,95H440')+dot(440,95)+T(420,122,'66[kV]');
+  return SVG(456,175,s,'11[kV] 발전원 2대와 발전기 G(20%), 차단기 1, 변압기(10%), 차단기 2, 66[kV] 선로');
+ },
+ 43:()=>{
+  let s=P('M20,112H410');
+  [96,213,330].forEach(x=>{ s+=CI(x,44,17)+T(x,48,'∼')+P(`M${x},61V72`)+RC(x-12,72,24,16)+P(`M${x},88V112`); });
+  s+=T(96,12,'5000[kVA]')+T(96,26,'X<tspan dy="3" font-size="8">G</tspan><tspan dy="-3">=12[%]</tspan>')
+   +T(272,12,'10000[kVA]×2')+T(272,26,'X<tspan dy="3" font-size="8">G</tspan><tspan dy="-3">=15[%]</tspan>');
+  [157,274].forEach(x=>{ s+=P(`M${x},112V126`)+RC(x-14,126,28,15)+P(`M${x},141V198`)+zzPair(x,170,true); });
+  s+=T(176,138,'A','start')+T(215,220,'40000[kVA]×2')+T(215,234,'X<tspan dy="3" font-size="8">T</tspan><tspan dy="-3">=10[%]</tspan>');
+  return SVG(420,242,s,'모선에 발전기 3대, 모선 아래 리액터와 변압기 2대, A점 차단기');
+ },
+ 44:()=>{
+  let s='';
+  [[35,'G1'],[115,'G2']].forEach(([y,n])=>{
+    s+=CI(40,y,14)+T(40,y+4,n)+T(40,y+30,'15[MVA]')+P(`M54,${y}H80`)+RC(80,y-9,30,18)+P(`M110,${y}H140`);
+  });
+  s+=T(95,22,'15[%]')+P('M140,35V115')+dot(140,75)+P('M140,75H172')
+   +CI(185,75,11)+CI(201,75,11)+T(185,79,'Y')+T(201,79,'Y')+T(193,48,'TR 8[%]')+T(193,106,'20[MVA]')
+   +P('M212,75H250')+RC(250,65,40,20)+P('M290,75H340')+T(270,52,'송전선 11[%]')+T(270,102,'10[MVA] 기준')
+   +T(366,52,'A점')+RC(340,67,16,16)+P('M356,75H366')+T(372,79,'차단기','start');
+  return SVG(440,160,s,'발전기 G1, G2 병렬, 변압기, 송전선, A점 차단기');
+ },
+ 45:()=>{
+  let s='';
+  [[38,'1'],[128,'2']].forEach(([y,n])=>{ s+=CI(40,y,16).replace('<circle','<circle class="thick"')+T(40,y+4,'<tspan font-style="italic">G</tspan><tspan dy="3" font-size="8">'+n+'</tspan>')+P(`M56,${y}H130`); });
+  s+=P('M130,38V128')+dot(130,83)+P('M130,83H178')+zzPair(190,83)+T(190,52,'<tspan font-style="italic">T</tspan>')
+   +P('M202,83H372')+arrow(376,83)+T(262,70,'송전선')+T(262,108,'11/154[kV]')+fault(320,83)+T(320,64,'S');
+  return SVG(400,160,s,'발전기 G1, G2, 변압기 T, 송전선, 단락점 S');
+ },
+ 46:()=>{
+  const g=(n,y,mva,pct,ym,yp)=>CI(60,y,17).replace('<circle','<circle class="thick"')+T(60,y+5,'∼')+T(30,y+4,'<tspan font-style="italic">G</tspan><tspan dy="3" font-size="8">'+n+'</tspan>','end')+T(60,ym,mva)+T(60,yp,pct)+P(`M77,${y}H125`);
+  let s=g(1,45,'20[MVA]','20[%]',14,82)+g(2,140,'30[MVA]','20[%]',112,178)
+   +P('M125,45V140')+dot(125,95)+P('M125,95H168')+zzPair(180,95)
+   +T(190,46,'<tspan font-style="italic">T</tspan><tspan dy="3" font-size="8">r</tspan>')+T(190,66,'11/154[kV]')+T(190,130,'50[MVA]')
+   +P('M192,95H440')+T(300,84,'5[%]')+T(310,126,'10[MVA] 기준')+fault(395,95)+T(395,76,'F');
+  return SVG(450,190,s,'발전기 G1(20MVA, 20%), G2(30MVA, 20%), 변압기 Tr(11/154kV, 50MVA), 선로 5%, 고장점 F');
+ },
+ 47:()=>{
+  let s=P('M40,40H190V62')+coilS(190,62,3,8,'L')+P('M190,110V150H40V40')
+   +arrow2(40,46,'u')+arrow2(40,144,'d')+T(32,92,'6600','end')+T(32,106,'[V]','end')
+   +T(115,30,'%X<tspan dy="3" font-size="8">H</tspan><tspan dy="-3">=8[%]</tspan>')
+   +T(115,168,'%X<tspan dy="3" font-size="8">t</tspan><tspan dy="-3">=4[%]</tspan>')
+   +P('M222,62V40H400V150H222V110')+coilS(222,62,3,8,'R')
+   +T(312,30,'%X<tspan dy="3" font-size="8">L</tspan><tspan dy="-3">=6[%]</tspan>')
+   +fault(400,95)+T(414,99,'단락','start');
+  return SVG(460,180,s,'고압선 8%, 변압기, 저압선 6%, 변압기 4%와 저압측 단락');
+ },
+};
+
+
+/* ---------- 6장 중성점 접지방식 (51문항) ---------- */
+/* 25번 보기 그래프: 영상전류 분포 (거리에 따른 변화), 접지 기호는 지락점(선로길이 1/4) */
+const gOpt=(pts)=>{
+  const ox=28,oy=92,ex=156,ty=10,fx=60;
+  const poly=pts.map(([x,y])=>`${x},${y}`).join(' ');
+  return `<svg viewBox="0 0 210 118" style="width:100%;max-width:240px;height:auto;display:block" role="img" aria-label="영상전류 분포 그래프" fill="none" stroke="currentColor" stroke-width="1.5">`
+   +`<path d="M${ox},${oy}V${ty-4}M${ox-3.5},${ty+2}L${ox},${ty-4}L${ox+3.5},${ty+2}"/>`
+   +`<path d="M${ox},${oy}H${ex+34}M${ex+28},${oy-3.5}L${ex+34},${oy}L${ex+28},${oy+3.5}"/>`
+   +`<path d="M${ex},${ty}V${oy}"/>`
+   +`<path d="M${fx},${oy}v6M${fx-9},${oy+6}h18M${fx-6},${oy+10}h12M${fx-3},${oy+14}h6"/>`
+   +`<polyline points="${poly}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`
+   +`<text transform="translate(13,52) rotate(-90)" text-anchor="middle" font-size="10" fill="currentColor" stroke="none">영상전류</text>`
+   +`<text x="${ex+8}" y="${oy+16}" font-size="10" fill="currentColor" stroke="none">거리→</text>`
+   +`</svg>`;
+};
+
+const Q6 = [
+{n:1,s:1,src:'산업 90년 2회, 04년 3회',
+ q:r`평형 3상 송전선에서 보통의 운전상태인 경우 중성점전위는 항상 얼마인가?`,
+ o:[r`0`,r`1`,r`송전전압과 같다.`,r`∞(무한대)`],a:1,
+ e:r`중성점의 전위는 3상 대칭 평형상태의 경우 항상 0[V]이다.`},
+
+{n:2,s:2,src:'산업 95년 7회, 98년 3회',
+ q:r`66000[V] 평형대칭 3상 송전선의 정상운전 시 건전상의 대지전위는?`,
+ o:[r`66000[V]`,r`$66000\sqrt{3}$[V]`,r`$\dfrac{66000}{\sqrt{3}}$[V]`,r`$\dfrac{66000}{\sqrt{2}}$[V]`],a:3,
+ e:r`3상 송전선의 건전상의 대지전위는 선간전압(정격전압)의 $\dfrac{1}{\sqrt{3}}$배로 나타난다.`},
+
+{n:3,s:5,f:1,src:'기사 00년 3회, 03년 3회, 17년 1회 / 산업 14년 2회, 18년 1회, 19년 1회',
+ q:r`송전선로의 중성점접지의 주된 목적은?`,
+ o:[r`단락전류의 제한`,r`송전용량의 극대화`,r`전압강하의 극소화`,r`이상전압의 방지`],a:4,
+ e:r`**중성점접지의 목적**
+㉠ 이상전압의 경감 및 발생 방지
+㉡ 전선로 및 기기의 절연 레벨 경감(단절연·저감절연)
+㉢ 보호계전기의 신속 확실한 동작
+㉣ 소호 리액터 접지계통에서 1선 지락 시 아크 소멸 및 안정도 증진`},
+
+{n:4,s:4,src:'기사 97년 5회, 11년 3회 / 산업 14년 2회',
+ q:r`송전선의 중성점을 접지하는 이유가 아닌 것은?`,
+ o:[r`고장전류크기의 억제`,r`이상전압발생의 방지`,r`보호계전기의 신속정확한 동작`,r`전선로 및 기기의 절연 레벨 경감`],a:1,
+ e:r`**송전선의 중성점접지의 목적**
+㉠ 대지전압상승 억제 : 지락고장 시 건전상 대지전압 상승억제 및 전선로와 기기의 절연 레벨 경감
+㉡ 이상전압상승 억제 : 뇌, 아크지락, 기타에 의한 이상전압 경감 및 발생방지
+㉢ 계전기의 확실한 동작확보 : 지락사고 시 지락계전기의 확실한 동작확보
+㉣ 아크지락 소멸 : 소호 리액터 접지인 경우 1선 지락 시 아크지락의 신속한 아크 소멸로 송전선을 지속`},
+
+{n:5,s:2,src:'산업 91년 2회, 97년 5회, 18년 3회',
+ q:r`저전압 단거리 송전선에 적당한 접지방식은?`,
+ o:[r`직접접지방식`,r`저항접지방식`,r`비접지방식`,r`소호 리액터 접지방식`],a:3,
+ e:r`비접지방식은 선로의 길이가 짧거나 전압이 낮은 계통(20 ~ 30[kV] 정도)에 적용한다.`},
+
+{n:6,s:2,src:'산업 92년 2회, 13년 2회',
+ q:r`중성점 비접지방식이 이용되는 송전선은?`,
+ o:[r`20 ~ 30[kV] 정도의 단거리 송전선`,r`40 ~ 50[kV] 정도의 중거리 송전선`,r`50 ~ 100[kV] 정도의 장거리 송전선`,r`140 ~ 160[kV] 정도의 장거리 송전선`],a:1,
+ e:r`**우리나라에 채용되고 있는 중성점 접지방식**
+㉠ 22[kV] : 비접지방식
+㉡ 22.9[kV] : 3상 4선식 중성점 다중 접지방식
+㉢ 66[kV] : 소호 리액터 접지방식
+㉣ 154[kV], 345[kV] : 직접접지방식(유효접지방식)`},
+
+{n:7,s:5,f:1,src:'기사 17년 3회 / 산업 93년 2회, 03년 4회, 05년 4회, 13년 3회',
+ q:r`△결선의 3상 3선식 배전선로가 있다. 1선이 지락하는 경우 건전상의 전위상승은 지락 전의 몇 배가 되는가?`,
+ o:[r`$\dfrac{\sqrt{3}}{2}$`,r`1`,r`$\sqrt{2}$`,r`$\sqrt{3}$`],a:4,
+ e:r`비접지방식에서 1선 지락사고 시 건전상의 대지전압이 $\sqrt{3}$배 상승하고 이상전압(4 ~ 6배)이 간헐적으로 발생한다.`},
+
+{n:8,s:2,src:'기사 94년 6회, 98년 4회, 04년 3회',
+ q:r`3300[V] △결선 비접지 배전선로에서 1선이 지락하면 전선로의 대지전압은 몇 [V]까지 상승하는가?`,
+ o:[r`3300`,r`4950`,r`5715`,r`6600`],a:1,
+ e:r`정상 시 대지전압은 $\dfrac{6600}{\sqrt{3}}$[V]이고, 1선 지락사고 시 대지전압이 $\sqrt{3}$배 상승하므로 1선 지락 시 건전상의 대지전압
+$V=\dfrac{3300}{\sqrt{3}}\times\sqrt{3}=3300$[V]
+**※ 올바른 해설**
+위 해설(책 표기)의 "6600"은 "3300"의 오기로 보인다. 이 선로의 선간전압은 3300[V]이므로
+정상 시 대지전압은 $\dfrac{3300}{\sqrt{3}}\fallingdotseq1905$[V]이다.
+비접지방식에서 1선 지락사고 시 건전상의 대지전압은 $\sqrt{3}$배 상승하므로
+$V=\dfrac{3300}{\sqrt{3}}\times\sqrt{3}=3300$[V]`},
+
+{n:9,s:2,src:'기사 03년 3회, 12년 2회 / 산업 94년 7회',
+ q:r`6.6[kV], 60[Hz], 3상 3선식 비접지식에서 선로의 길이가 10[km]이고 1선의 대지정전용량이 0.005[$\mu$F/km]일 때 1선 지락 시 고장전류 $I_g$[A]의 범위로 옳은 것은?`,
+ o:[r`$I_g\lt 1$`,r`$1\le I_g\lt 2$`,r`$2\le I_g\lt 3$`,r`$3\le I_g\lt 4$`],a:1,
+ e:r`비접지식 선로에서 1선 지락사고 시
+지락전류 $I_g=2\pi f(3C_s)\dfrac{V}{\sqrt{3}}\,l\times10^{-6}$
+$=2\pi\times60\times3\times0.005\times\dfrac{6600}{\sqrt{3}}\times10\times10^{-6}$
+$=0.215$[A]`},
+
+{n:10,s:5,f:1,src:'기사 17년 1회, 19년 2회(유사) / 산업 01년 2회, 05년 1회, 07년 4회, 15년 3회',
+ q:r`비접지식 송전선로에 있어서 1선 지락고장이 생겼을 경우 지락점에 흐르는 전류는?`,
+ o:[r`직류전류이다.`,r`고장상의 전압보다 90도 늦은 전류이다.`,r`고장상의 전압보다 90도 빠른 전류이다.`,r`고장상의 전압과 동상의 전류이다.`],a:3,
+ e:r`비접지방식에서 1선 지락고장 시 지락점에 흐르는 전류는 대지정전용량으로 흐르는 충전전류로서, 90° 진상전류가 된다.`},
+
+{n:11,s:2,src:'산업 17년 2회',
+ q:r`배전로에 3상 3선식 비접지방식을 채용할 경우 장점이 아닌 것은?`,
+ o:[r`과도안정도가 크다.`,r`1선 지락고장 시 고장전류가 작다.`,r`1선 지락고장 시 인접통신선의 유도장해가 작다.`,r`1선 지락고장 시 건전상의 대지전위상승이 작다.`],a:4,
+ e:r`**비접지방식의 특성**
+㉠ 비접지방식의 장점
+• 1선 지락고장 시 대지정전용량에 의한 리액턴스가 커서 지락전류가 아주 작다.
+• 근접통신선에 대한 유도장해가 작다.
+• 변압기의 △결선으로 선로에 제3고조파가 나타나지 않는다.
+• 변압기의 1대 고장 시에도 V결선으로 3상 전력의 공급이 가능하다.
+㉡ 비접지방식의 단점
+• 1선 지락고장 시 건전상의 대지전압이 $\sqrt{3}$배, 이상전압(4 ~ 6배)이 나타난다.
+• 계통의 기기절연 레벨을 높여야 한다.`},
+
+{n:12,s:3,src:'산업 92년 5회',
+ q:r`중성점 직접접지 송전방식의 장점에 해당되지 않는 것은?`,
+ o:[r`사용기기의 절연 레벨을 경감시킬 수 있다.`,r`1선 지락고장 시 건전상의 전위상승이 작다.`,r`1선 지락고장 시 접지계전기의 동작이 확실하다.`,r`1선 지락고장 시 인접통신선의 전자유도장해가 작다.`],a:4,
+ e:r`직접접지방식에서 1선 지락고장 시 대지로 흐르는 고장전류는 영상전류이므로 인접통신선에 전자유도장해를 주게 된다.`},
+
+{n:13,s:4,src:'산업 95년 5회, 00년 2회, 07년 2회',
+ q:r`이상전압의 발생 우려가 가장 작은 중성점 접지방식은?`,
+ o:[r`저항접지방식`,r`소호 리액터 접지방식`,r`직접접지방식`,r`비접지방식`],a:3,
+ e:r`중성점 직접접지방식은 1선 지락사고 시 건전상의 대지전압상승이 작고 이상전압이 억제된다.`},
+
+{n:14,s:5,f:1,src:'기사 14년 3회 / 산업 99년 4회, 00년 1회, 02년 2회, 06년 4회, 18년 2회',
+ q:r`송전계통에 있어서 지락보호계전기의 동작이 가장 확실한 방식은?`,
+ o:[r`비접지식`,r`고저항접지식`,r`직접접지식`,r`소호 리액터 접지식`],a:3,
+ e:r`직접접지방식은 1선 지락사고 시 지락전류가 커서 고장검출이 확실하고 고속도로 선택차단이 가능하다.`},
+
+{n:15,s:1,src:'기사 09년 1회',
+ q:r`정격전압 13200[V]인 Y결선발전기의 중성점을 80[Ω]의 저항으로 접지하였다. 발전기 단자에서 1선 지락전류는 약 몇 [A]인가? (단, 기타 정수는 무시한다)`,
+ o:[r`60`,r`95`,r`120`,r`165`],a:4,
+ e:r`1선 지락전류 $I_g=\dfrac{V}{R}$
+$=\dfrac{13200}{80}=165$[A]
+여기서, $R$ : 접지저항
+**※ 문제 오류 안내**
+이 문제에는 오류가 있다. 정격전압 13200[V]는 선간전압이므로, Y결선 발전기의 1선 지락전류는 상전압을 사용하여 구해야 한다.
+$I_g=\dfrac{V/\sqrt{3}}{R}=\dfrac{13200/\sqrt{3}}{80}\fallingdotseq95$[A]
+따라서 올바르게 계산하면 약 95[A](②)이지만, 책의 정답은 ④ 165[A]로 되어 있다.`},
+
+{n:16,s:5,f:1,src:'기사 93년 3회, 95년 4회, 04년 1회, 12년 1회, 16년 3회(유사) / 산업 11년 1회',
+ q:r`직접접지방식이 초고압 송전선로에 채용되는 이유 중 가장 적당한 것은?`,
+ o:[r`지락고장 시 병행통신선에 유기되는 유도전압이 작기 때문에`,r`지락 시 지락전류가 작으므로`,r`계통의 절연을 낮게 할 수 있으므로`,r`송전선로의 안정도가 높으므로`],a:3,
+ e:r`**직접접지방식의 장단점**
+㉠ 장점
+• 1선 지락고장 시 이상전압이 낮다.
+• 절연 레벨을 낮출 수 있다(저감절연으로 경제적).
+• 변압기의 단절연을 할 수 있다.
+• 보호계전기의 동작이 확실하다.
+㉡ 단점
+• 지락전류가 저역률, 대전류이기 때문에 계통의 안정도가 저하된다.
+• 지락고장 시 병행통신선에 대한 전자유도장해가 크다.
+• 지락전류가 커서 기기에 대한 기계적 충격이 있다.`},
+
+{n:17,s:4,src:'기사 93년 2회, 02년 1회, 11년 1회 / 산업 17년 1회',
+ q:r`직접접지방식에 대한 설명 중 옳지 않은 것은?`,
+ o:[r`이상전압발생의 우려가 없다.`,r`계통의 절연수준이 낮아지므로 경제적이다.`,r`변압기의 단절연이 가능하다.`,r`보호계전기가 신속히 동작하므로 과도안정도가 좋다.`],a:4,
+ e:r`**직접접지방식**
+㉠ 1선 지락 시 건전상의 전위는 평상시 같아 기기의 절연을 단절연할 수 있어 변압기가격이 저렴하다.
+㉡ 1선 지락 시 지락전류가 커서 지락계전기의 동작이 확실하다. 반면 지락전류가 크기 때문에 기기에 주는 충격과 유도장해가 크고 안정도가 나쁘다.`},
+
+{n:18,s:3,src:'기사 91년 6회, 97년 7회, 11년 2회',
+ q:r`직접접지방식에서 변압기에 단절연을 할 수 있는 이유는?`,
+ o:[r`고장전류가 크므로`,r`중성점전위가 낮으므로`,r`이상전압이 낮으므로`,r`보호계전기의 동작이 확실하므로`],a:2,
+ e:r`직접접지방식의 경우 중성점접지가 가능하여 중성점전위가 0[V]가 되므로 변압기의 단절연이 가능하다. 반면에 비접지방식은 변압기의 전절연을 실시한다.`},
+
+{n:19,s:3,src:'산업 06년 3회, 16년 2회',
+ q:r`중성점 접지방식에서 직접접지방식을 다른 접지방식과 비교하였을 때 그 설명으로 틀린 것은?`,
+ o:[r`변압기의 저감절연이 가능하다.`,r`지락고장 시 이상전압이 낮다.`,r`다중 접지사고로의 확대 가능성이 대단히 크다.`,r`보호계전기의 동작이 확실하여 신뢰도가 높다.`],a:3,
+ e:r`**직접접지방식의 특성**
+㉠ 계통에 접속된 변압기의 중성점을 금속선으로 직접 접지하는 방식이다.
+㉡ 1선 지락고장 시 이상전압이 낮다.
+㉢ 절연 레벨을 낮출 수 있다(저감절연으로 경제적).
+㉣ 변압기의 단절연을 할 수 있다.
+㉤ 보호계전기의 동작이 확실하다.`},
+
+{n:20,s:4,src:'산업 93년 2회',
+ q:r`유효접지는 1선 접지 시 전선상의 전압이 상규대지전압의 몇 배를 넘지 않도록 하는 중성점접지를 말하는가?`,
+ o:[r`0.8`,r`1.3`,r`3`,r`4`],a:2,
+ e:r`1선 지락고장 시 건전상 전압이 상규대지전압의 1.3배를 넘지 않는 범위에 들어가도록 중성점 임피던스를 조절해서 접지하는 방식을 유효접지라고 한다.`},
+
+{n:21,s:5,f:1,src:'기사 03년 2회 / 산업 95년 6회, 04년 3회',
+ q:r`송전계통의 중성점 접지방식에서 유효접지라 하는 것은?`,
+ o:[r`소호 리액터 접지방식`,r`1선 접지 시 건전상의 전압이 상규대지전압의 1.3배 이하로 중성점 임피던스를 억제시키는 중성점접지`,r`중성점에 고저항을 접지시켜 1선 지락 시 이상전압의 상승을 억제시키는 중성점접지`,r`송전선로에 사용되는 변압기의 중성점을 저리액턴스로 접지시키는 방식`],a:2,
+ e:r`1선 지락고장 시 건전상의 전압상승이 평상시 대지전압의 1.3배 이하가 유지되도록 중성점 임피던스를 조절해서 접지하는 방식(선간전압의 75[%]가 넘지 않도록 중성점 임피던스 조절)이다.`},
+
+{n:22,s:1,src:'산업 93년 1회, 06년 4회',
+ q:r`1선 지락 시 전압상승을 상규대지전압의 1.3배 이하로 억제하기 위한 유효접지에서는 다음과 같은 조건을 만족하여야 한다. 다음 중 옳은 것은? (단, $R_0$ : 영상저항, $X_0$ : 영상 리액턴스, $X_1$ : 정상 리액턴스)`,
+ o:[r`$\dfrac{R_0}{X_1}\le 1,\ 0\ge\dfrac{X_1}{X_0}\ge -3$`,
+    r`$\dfrac{R_0}{X_1}\ge 1,\ 0\ge\dfrac{X_0}{X_1}\ge -3$`,
+    r`$\dfrac{R_0}{X_1}\le 1,\ 0\le\dfrac{X_0}{X_1}\le 3$`,
+    r`$\dfrac{R_0}{X_1}\ge 1,\ 0\le\dfrac{X_0}{X_1}\le 3$`],a:3,
+ e:r`$\dfrac{X_0}{X_1}\le 3,\ \dfrac{R_0}{X_1}\le 1$이라는 유효접지조건을 만족하면 1선 지락 시 건전상의 대지간 전압은 고장 전보다 1.3배 또는 선간전압의 0.8배 이하이다.`},
+
+{n:23,s:4,f:1,src:'기사 16년 3회 / 산업 96년 4회, 00년 4회, 07년 4회, 12년 3회, 16년 1회',
+ q:r`송전선로에서 1선 지락 시 건전상의 전압상승이 가장 작은 접지방식은 어느 것인가?`,
+ o:[r`비접지방식`,r`직접접지방식`,r`저항접지방식`,r`소호 리액터 접지방식`],a:2,
+ e:r`직접접지방식은 1선 지락고장 시 건전상의 전압상승이 거의 없다.`,
+ tbl:[[r`구분`,r`비접지방식`,r`직접접지방식`,r`소호 리액터 접지방식`],
+      [r`1선 지락 시 건전상 전압 상승`,r`$\sqrt{3}$배 상승`,r`최소`,r`−`],
+      [r`기기절연수준`,r`최고`,r`최저(단절연)`,r`중간`],
+      [r`1선 지락전류`,r`작다.`,r`최대`,r`매우 작다.`],
+      [r`전자유도장해`,r`작다.`,r`최대`,r`매우 작다.`],
+      [r`과도안정도`,r`높다.`,r`최소`,r`매우 높다.`]]},
+
+{n:24,s:1,src:'산업 95년 5회',
+ q:r`우리나라에서 소호 리액터 접지방식이 사용되고 있는 계통은 어느 전압[kV]계급인가?`,
+ o:[r`22.9`,r`66`,r`154`,r`345`],a:2,
+ e:r`**우리나라에 채택되고 있는 접지방식**
+㉠ 22[kV] : 비접지방식
+㉡ 66[kV] : 소호 리액터 접지방식(단, 제주도 : 저항접지방식)
+㉢ 154[kV], 345[kV] : 직접접지방식(유효접지방식)`},
+
+{n:25,s:4,src:'기사 96년 4회, 99년 5회, 04년 1회',
+ q:r`어떤 선로의 양단에 같은 용량의 소호 리액터를 설치한 3상 1회선 송전선로에서 전원측으로부터 선로길이의 $\dfrac{1}{4}$ 지점에 1선 지락고장이 발생했다면 영상전류의 분포는 대략 어떠한가?`,
+ o:[gOpt([[28,16],[60,86],[156,72]]),
+    gOpt([[28,40],[92,86],[156,48]]),
+    gOpt([[28,68],[60,88],[156,26]]),
+    gOpt([[28,92],[92,30],[156,92]])],a:2,
+ e:r`소호 리액터 접지방식은 병렬공진을 이용하여 지락전류를 억제하므로 지락점의 위치에 관계없이 선로 양단에 나타나는 영상전류의 크기는 같다.`},
+
+{n:26,s:2,src:'산업 03년 1회, 16년 1회',
+ q:r`3상 1회선 송전선로의 소호 리액터 용량은?`,
+ o:[r`선로충전용량과 같다.`,r`3선 일괄의 대지충전용량과 같다.`,r`선간충전용량의 $\dfrac{1}{2}$이다.`,r`1선과 중성점 사이의 충전용량과 같다.`],a:2,
+ e:r`**병렬공진**
+㉠ 소호 리액터의 인덕턴스 = 전선로의 3선 일괄의 대지충전용량
+㉡ 소호 리액터의 용량 $\omega L=\dfrac{1}{3\omega C_s}$`},
+
+{n:27,s:4,f:1,src:'기사 97년 4회, 99년 5회, 05년 4회, 18년 2회',
+ q:r`소호 리액터를 송전계통에 사용하면 리액터의 인덕턴스와 선로의 정전용량이 어떤 상태로 되어 지락전류를 소멸시키는가?`,
+ o:[r`병렬공진`,r`직렬공진`,r`고임피던스`,r`저임피던스`],a:1,
+ e:r`소호 리액터 접지방식은 리액터 용량과 대지정전용량의 병렬공진을 이용하여 지락전류를 소멸시킨다.`},
+
+{n:28,s:3,src:'산업 92년 3회, 03년 2회, 14년 1회',
+ q:r`다음 중성점 접지방식 중 단선고장일 때 선로의 전압상승이 최대이고 또한 통신장해가 최소인 것은?`,
+ o:[r`비접지`,r`직접접지`,r`저항접지`,r`소호 리액터 접지`],a:4,
+ e:r`소호 리액터 접지방식은 지락사고 시 건전상의 전압상승이 거의 상승하지 않고 지락전류(영상전류)가 억제되어 근접통신선에 유도장해가 최소이다.`},
+
+{n:29,s:4,src:'산업 93년 3·4회, 98년 2회, 99년 6회, 12년 1회, 16년 2회, 19년 2회',
+ q:r`다음 중 소호 리액터 접지에 대한 설명으로 틀린 것은?`,
+ o:[r`선택지락계전기의 동작이 용이하다.`,r`지락전류가 작다.`,r`지락 중에도 송전이 계속 가능하다.`,r`전자유도장해가 경감한다.`],a:1,
+ e:r`소호 리액터 접지방식은 지락사고 시 소호 리액터와 대지정전용량의 병렬공진으로 인해 지락전류가 거의 흐르지 않으므로 고장검출이 어려워 선택지락계전기의 동작이 불확실하다.`},
+
+{n:30,s:4,src:'기사 93년 1회, 98년 7회, 01년 2회, 05년 1회, 12년 1회, 19년 1회',
+ q:r`송전계통에 있어서 1선 지락의 경우 지락전류가 가장 작은 중성점 접지방식은?`,
+ o:[r`저항접지식`,r`직접접지식`,r`비접지식`,r`소호 리액터 접지식`],a:4,
+ e:r`**송전계통의 접지방식별 지락사고 시 지락전류 크기비교**`,
+ tbl:[[r`중성점 접지방식`,r`비접지`,r`직접접지`,r`저항접지`,r`소호 리액터 접지`],
+      [r`지락전류의 크기`,r`작다.`,r`최대`,r`중간 정도`,r`최소`]]},
+
+{n:31,s:3,src:'기사 16년 2회',
+ q:r`송전계통에서 1선 지락의 경우 유도장해가 가장 작은 중성점 접지방식은?`,
+ o:[r`비접지방식`,r`저항접지방식`,r`직접접지방식`,r`소호 리액터 접지방식`],a:4,
+ e:r`**중성점 접지방식별 특성비교**`,
+ tbl:[[r`구분`,r`비접지방식`,r`직접접지방식`,r`소호 리액터 접지방식`],
+      [r`기기절연수준`,r`최고`,r`최저(단절연)`,r`중간`],
+      [r`1선 지락전류`,r`매우 작다.`,r`최대`,r`최소`],
+      [r`전자유도장해`,r`매우 작다.`,r`최대`,r`최소`],
+      [r`과도안정도`,r`크다.`,r`최소`,r`최대`]]},
+
+{n:32,s:2,src:'기사 98년 3회',
+ q:r`다음 중 1선 지락전류가 큰 순서대로 배열된 것은?
+㉠ 직접접지 3상 3선 방식
+㉡ 저항접지 3상 3선 방식
+㉢ 리액터(reactor) 접지 3상 3선 방식
+㉣ 비접지 3상 3선 방식`,
+ o:[r`㉣-㉠-㉡-㉢`,r`㉣-㉡-㉠-㉢`,r`㉠-㉡-㉣-㉢`,r`㉡-㉠-㉢-㉣`],a:3,
+ e:r`**송전계통의 접지방식별 지락사고 시 지락전류 크기비교**`,
+ tbl:[[r`중성점 접지방식`,r`비접지`,r`직접접지`,r`저항접지`,r`소호 리액터 접지`],
+      [r`지락전류의 크기`,r`작다.`,r`최대`,r`중간 정도`,r`최소`]]},
+
+{n:33,s:4,src:'산업 94년 4회, 95년 6회, 98년 4회, 99년 5회, 06년 4회, 07년 1회',
+ q:r`단선고장 시 이상전압이 가장 큰 접지방식은? (단, 비공진 탭이나 2회선을 사용하지 않은 경우임)`,
+ o:[r`비접지식`,r`직접접지식`,r`소호 리액터 접지식`,r`고저항 접지식`],a:3,
+ e:r`소호 리액터 접지계통에서 1선 단선사고가 발생하면 대지정전용량과 직렬공진상태가 되어 이상전압이 발생한다.`},
+
+{n:34,s:5,f:1,src:'기사 02년 3회, 05년 2회 / 산업 92년 7회, 93년 2회, 11년 3회, 13년 2회(유사)',
+ q:r`소호 리액터 접지계통에서 리액터의 탭을 완전공진상태에서 약간 벗어나도록 하는 이유는?`,
+ o:[r`전력손실을 줄이기 위하여`,r`선로의 리액턴스분을 감소시키기 위하여`,r`접지계전기의 동작을 확실하게 하기 위하여`,r`직렬공진에 의한 이상전압의 발생을 방지하기 위하여`],a:4,
+ e:r`소호 리액터 접지방식에서 1선 지락사고 시 건전상의 전선이 단선될 경우 직렬공진으로 인해 이상전압이 발생할 우려가 있으므로 리액터를 과보상으로 하여 설치한다.
+$\omega L\lt\dfrac{1}{3\omega C_s}$ → 과보상(이상전압 방지)
+소호 리액터의 용량 $\omega L=\dfrac{1}{3\omega C}-\dfrac{X_t}{3}$`},
+
+{n:35,s:4,f:1,src:'기사 93년 4회, 97년 2회, 00년 3회 / 산업 11년 2회, 13년 2회',
+ q:r`송전계통의 중성점접지용 소호 리액터의 인덕턴스 $L$은? (단, 선로 한 선의 대지정전용량을 $C$라 한다)`,
+ o:[r`$L=\dfrac{1}{C}$`,r`$L=\dfrac{C}{2\pi f}$`,r`$L=\dfrac{1}{2\pi fC}$`,r`$L=\dfrac{1}{3(2\pi f)^2C}$`],a:4,
+ e:r`소호 리액터의 리액턴스 $\omega L=\dfrac{1}{3\omega C}$에서
+인덕턴스 $L=\dfrac{1}{3\omega^2C}$이다.`},
+
+{n:36,s:3,src:'기사 00년 2회, 01년 3회, 03년 1회',
+ q:r`소호 리액터 접지방식에서 10[%] 정도의 과보상을 한다고 할 때 사용되는 탭의 크기로 일반적인 것은?`,
+ o:[r`$\omega L\gt\dfrac{1}{3\omega C}$`,r`$\omega L\lt\dfrac{1}{3\omega C}$`,r`$\omega L\gt\dfrac{1}{3\omega^2C}$`,r`$\omega L\lt\dfrac{1}{3\omega^2C}$`],a:2,
+ e:r`㉠ $\omega L\gt\dfrac{1}{3\omega C}$ : 부족보상
+㉡ $\omega L\lt\dfrac{1}{3\omega C}$ : 과보상
+㉢ $\omega L=\dfrac{1}{3\omega C}$ : 완전보상`},
+
+{n:37,s:4,f:1,src:'기사 93년 1회, 99년 4회, 02년 2회, 04년 4회, 11년 3회',
+ q:r`1상의 대지정전용량 $C$[F], 주파수 $f$[Hz]의 3상 송전선의 소호 리액터의 공진 탭의 리액턴스는 몇 [Ω]인가? (단, 소호 리액터를 접속시키는 변압기의 리액턴스는 $X_t$[Ω]이다)`,
+ o:[r`$\dfrac{1}{3\omega C}+\dfrac{X_t}{3}$`,r`$\dfrac{1}{3\omega C}-\dfrac{X_t}{3}$`,r`$\dfrac{1}{3\omega C}+3X_t$`,r`$\dfrac{1}{3\omega C}-3X_t$`],a:2,
+ e:r`소호 리액터 $\omega L=\dfrac{1}{3\omega C}-\dfrac{X_t}{3}$[Ω]
+여기서, $X_t$ : 변압기 1상당 리액턴스`},
+
+{n:38,s:2,src:'산업 94년 3회',
+ q:r`1상 대지정전용량 0.53[$\mu$F], 주파수 60[Hz]의 3상 송전선의 소호 리액터의 공진 탭(리액턴스)은 몇 [Ω]인가? (단, 접지시키는 변압기의 1상당의 리액턴스는 9[Ω]이다)`,
+ o:[r`1466`,r`1566`,r`1666`,r`1686`],a:3,
+ e:r`소호 리액터 $\omega L=\dfrac{1}{3\omega C}-\dfrac{X_t}{3}$[Ω]
+$=\dfrac{1}{3\times2\pi\times60\times0.53\times10^{-6}}-\dfrac{9}{3}$
+$=1665.25\fallingdotseq1666$[Ω]
+여기서, $X_t$ : 변압기 1상당 리액턴스`},
+
+{n:39,s:2,src:'산업 97년 6회',
+ q:r`1상 대지정전용량 0.53[$\mu$F], 주파수 60[Hz]의 3상 송전선이 있다. 이 선로에 소호 리액터를 설치하고자 한다. 소호 리액터의 10[%] 과보상 탭의 리액턴스는 약 몇 [Ω]인가? (단, 소호 리액터를 접지시키는 변압기 1상당의 리액턴스는 9[Ω]이다)`,
+ o:[r`505`,r`806`,r`1498`,r`1514`],a:4,
+ e:r`소호 리액터 $\omega L=\dfrac{1}{3\omega C}-\dfrac{X_t}{3}$[Ω]
+$=\dfrac{1}{3\times2\pi\times60\times0.53\times10^{-6}\times1.1}-\dfrac{9}{3}$
+$=1513.6\fallingdotseq1514$[Ω]
+여기서, $X_t$ : 변압기 1상당 리액턴스`},
+
+{n:40,s:5,f:1,src:'산업 95년 4회, 98년 4회, 01년 3회, 06년 1회, 12년 3회',
+ q:r`3상 3선식 소호 리액터 접지방식에서 1선의 대지정전용량을 $C$[$\mu$F], 상전압 $E$[kV], 주파수 $f$[Hz]라 하면, 소호 리액터의 용량은 몇 [kVA]인가?`,
+ o:[r`$\pi fCE^2\times10^{-3}$`,r`$2\pi fCE^2\times10^{-3}$`,r`$3\pi fCE^2\times10^{-3}$`,r`$6\pi fCE^2\times10^{-3}$`],a:4,
+ e:r`소호 리액터 용량은 3선의 대지정전용량과 병렬공진으로 하므로 $\omega L=\dfrac{1}{3\omega C}$
+소호 리액터 용량 $Q_L=3EI_c=3E\cdot\dfrac{E}{X_c}$
+$=3E\cdot\dfrac{E}{\dfrac{1}{\omega C}}=3\omega CE^2$[kVA]
+이를 전압과 대지정전용량의 단위를 고려하여 정리하면 다음과 같다.
+소호 리액터 용량 $Q_L=3\omega C\times10^{-6}\times E^2\times10^{6}\times10^{-3}$
+$=6\pi fCE^2\times10^{-3}$[kVA]`},
+
+{n:41,s:4,f:1,src:'산업 91년 5회, 96년 7회, 18년 3회',
+ q:r`공칭전압 $V$[kV], 1상의 대지정전용량 $C$[$\mu$F], 주파수 $f$의 3상 3선식 1회선 송전선의 소호 리액터 접지방식에서 소호 리액터의 용량은 몇 [kVA]인가?`,
+ o:[r`$6\pi fCV^2\times10^{-3}$`,r`$3\pi fCV^2\times10^{-3}$`,r`$2\pi fCV^2\times10^{-3}$`,r`$\pi fCV^2\times10^{-3}$`],a:3,
+ e:r`소호 리액터 용량
+$Q_L=2\pi fC(V\times10^3)^2l\times10^{-9}$[kVA]
+$=2\pi fCV^2l\times10^{-3}$
+여기서, $C$ : 대지정전용량[$\mu$F], $V$ : 선간전압`},
+
+{n:42,s:3,src:'산업 95년 5회',
+ q:r`선로의 길이가 60[km]인 3상 3선식 66[kV] 1회선 송전에 적당한 소호 리액터 용량은 몇 [kVA]인가? (단, 대지정전용량은 1선당 0.0053[$\mu$F/km]이다)`,
+ o:[r`322`,r`522`,r`1044`,r`1566`],a:2,
+ e:r`소호 리액터 용량 $Q_L=2\pi fCV^2l\times10^{-9}$[kVA]
+$=2\times\pi\times60\times0.0053\times66000^2\times60\times10^{-9}=522.2$[kVA]`},
+
+{n:43,s:3,src:'산업 89년 6회',
+ q:r`66[kV], 100[km], 60[Hz]인 평행 2회선 송전선이 있다. 여기서, 시설한 소호 리액터의 용량[kVA]은? (단, 1선 1[km]당 대지용량은 0.004[$\mu$F], 과보상은 30[%]로 한다)`,
+ o:[r`1657`,r`1707`,r`1757`,r`1807`],a:2,
+ e:r`소호 리액터 용량 $Q_L=Q_c=2\pi fCV^2l\times10^{-9}$[kVA]
+평행 2회선의 경우 소호 리액터의 용량을 2배로 하여야 하므로
+$Q_L=2\pi\times60\times0.004\times66000^2\times100\times10^{-9}\times(1+0.3)\times2=1707$[kVA]`},
+
+{n:44,s:1,src:'산업 94년 5회',
+ q:r`154[kV], 60[Hz], 선로의 길이가 200[km]인 평행 2회선 송전선로에 설치한 소호 리액터의 공진 탭의 용량은 약 몇 [MVA]인가? (단, 1선의 대지정전용량=0.0043[$\mu$F/km])`,
+ o:[r`7.7`,r`10.3`,r`15.4`,r`18.6`],a:3,
+ e:r`소호 리액터의 공진 탭 용량
+$Q_L=2\pi\times60\times0.0043\times154000^2\times200\times10^{-9}\times2$
+$=15378$[kVA]
+$\fallingdotseq15.4$[MVA]`},
+
+{n:45,s:1,src:'산업 92년 7회, 02년 4회',
+ q:r`66[kV], 60[Hz], 3상 3선식 선로에서 중성점을 소호 리액터 접지하여 완전공진상태로 되었을 때 중성점에 흐르는 전류는 몇 [A]인가? (단, 소호 리액터를 포함한 영상회로의 등가저항은 200[Ω], 잔류전압은 4400[V]라고 한다)`,
+ o:[r`11`,r`22`,r`33`,r`44`],a:2,
+ e:r`중성점의 전류 $I=\dfrac{\text{잔류전압}}{\text{등가저항}}=\dfrac{4400}{200}=22$[A]`},
+
+{n:46,s:4,f:1,src:'기사 93년 2회',
+ q:r`다음 표는 리액터의 종류와 그 목적을 나타낸 것이다. 바르게 짝지어진 것은?`,
+ qtbl:[[r`종류`,r`목적`],
+       [r`㉠ 병렬 리액터`,r`ⓐ 지락 아크의 소멸`],
+       [r`㉡ 한류 리액터`,r`ⓑ 송전손실 경감`],
+       [r`㉢ 직렬 리액터`,r`ⓒ 차단기의 용량 경감`],
+       [r`㉣ 소호 리액터`,r`ⓓ 제5고조파 제거`]],
+ o:[r`㉠-ⓑ`,r`㉡-ⓓ`,r`㉢-ⓓ`,r`㉣-ⓒ`],a:3,
+ e:r`**리액터의 종류 및 특성**
+㉠ 병렬 리액터(분로 리액터) : 페란티 현상을 방지한다.
+㉡ 한류 리액터 : 계통의 사고 시 단락전류의 크기를 억제하여 차단기의 용량을 경감시킨다.
+㉢ 직렬 리액터 : 콘덴서 설비에서 발생하는 제5고조파를 제거한다.
+㉣ 소호 리액터 : 1선 지락사고 시 지락전류를 억제하여 지락 시 발생하는 아크를 소멸시킨다.`},
+
+{n:47,s:3,f:1,src:'기사 03년 4회 / 산업 94년 7회, 98년 6회',
+ q:r`송전선로의 접지에 대하여 기술하였다. 다음 중 옳은 것은?`,
+ o:[r`소호 리액터 접지방식은 선로의 정전용량과 직렬공진을 이용한 것으로, 지락전류가 타방식에 비해 좀 큰 편이다.`,
+    r`고저항 접지방식은 이중고장을 발생시킬 확률이 거의 없으며 비접지식보다는 많은 편이다.`,
+    r`직접접지방식을 채용하는 경우 이상전압이 낮기 때문에 변압기선정 시 단절연이 가능하다.`,
+    r`비접지방식을 택하는 경우 지락전류차단이 용이하고 장거리송전을 할 경우 이중고장의 발생을 예방하기 좋다.`],a:3,
+ e:r`직접접지방식은 지락사고 시 건전상의 전압이 거의 변화가 없고 이상전압이 낮기 때문에 절연 레벨을 낮게 하고 단절연방식을 채택할 수 있다.`},
+
+{n:48,s:3,src:'기사 96년 5회, 99년 6회',
+ q:r`비접지방식을 직접접지방식과 비교한 것 중 옳지 않은 것은?`,
+ o:[r`전자유도장해가 경감된다.`,r`지락전류가 작다.`,r`보호계전기의 동작이 확실하다.`,r`△결선을 하여 영상전류를 흘릴 수 있다.`],a:3,
+ e:r`비접지방식은 지락사고 시 지락전류가 작아 고장전류의 검출이 어려워 보호계전기의 동작이 불확실해진다. 그러므로 지락사고 시 대지전압이 상승하는 특성을 이용하여 접지형 계기용 변압기(GPT)를 이용하여 지락과전압계전기(OVGR)를 사용한다.`},
+
+{n:49,s:1,src:'기사 05년 4회',
+ q:r`공통중성선 다중 접지방식의 특성에 대한 설명으로 옳은 것은?`,
+ o:[r`저압 혼촉 시 저압선 전위상승이 낮다.`,r`합성접지저항이 매우 높다.`,r`건전상의 전위상승이 매우 높다.`,r`고감도의 지락보호가 용이하다.`],a:4,
+ e:r`다중 접지방식의 경우 여러 개의 접지극이 병렬접속으로 합성저항이 작아 지락사고검출이 용이하다.`},
+
+{n:50,s:2,src:'산업 07년 4회',
+ q:r`3상 4선식 고압 선로의 보호에 있어서 중성선 다중 접지방식의 특성 중 옳은 것은?`,
+ o:[r`합성접지저항이 매우 높다.`,r`건전상의 전위상승이 매우 높다.`,r`통신선에 유도장해를 줄 우려가 있다.`,r`고장 시 고장전류가 매우 작다.`],a:3,
+ e:r`3상 4선식 중성선 다중 접지방식에서 1선 지락사고 시 지락전류(영상분 전류)가 매우 커서 근접통신선에 유도장해가 크게 발생한다.`},
+
+{n:51,s:5,src:'산업 90년 2회, 02년 3회, 05년 4회, 13년 2회',
+ q:r`중성점 저항접지방식의 병행 2회선 송전선로의 지락사고차단에 사용되는 계전기는?`,
+ o:[r`선택접지계전기`,r`과전류계전기`,r`거리계전기`,r`역상계전기`],a:1,
+ e:r`**선택지락(접지)계전기(SGR)**
+병행 2회선 송전선로에서 지락사고 시 고장회선만을 선택차단할 수 있게 하는 계전기이다.`},
+];
+
+/* ---------- 문항 통합 (5장 + 6장) ---------- */
+const FIG6 = {};
+const Q = [...Q5.map(q=>({...q,ch:5})), ...Q6.map(q=>({...q,ch:6}))];
+const CH = {5:{name:'5장 고장계산 및 안정도',count:Q5.length}, 6:{name:'6장 중성점 접지방식',count:Q6.length}};
+const figOf = q => (q.ch===5?FIG5:FIG6)[q.n];
+
+/* ---------- app ---------- */
+const app = document.getElementById('app');
+let S = null;                       // 진행 중인 시험 (S.ids = Q의 인덱스 배열)
+let cfg = {ch:'all', order:'seq', mode:'practice', from:1, to:62};
+const NUM = ['①','②','③','④'];
+
+function html(s){ // 간단한 텍스트 → HTML (줄바꿈, **굵게**)
+  return s.replace(/&/g,'&amp;').replace(/<(?![a-z\/])/gi,'&lt;')
+          .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+          .split('\n').map(l=>l.trim()===''?'':'<p>'+l+'</p>').join('');
+}
+function inline(s){ return s.replace(/&/g,'&amp;').replace(/<(?![a-z\/])/gi,'&lt;').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>'); }
+function tblHtml(rows){
+  return `<div class="scroll"><table class="tbl"><thead><tr>${rows[0].map(c=>`<th scope="col">${inline(c)}</th>`).join('')}</tr></thead><tbody>${
+    rows.slice(1).map(r=>`<tr><th scope="row">${inline(r[0])}</th>${r.slice(1).map(c=>`<td>${inline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function mathify(el){
+  try{
+    renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
+      output:'mathml',throwOnError:false,strict:false});
+  }catch(e){}
+}
+function stars(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
+
+function renderHome(){
+  const single = cfg.ch!=='all';
+  const max = single ? CH[cfg.ch].count : 0;
+  const total = Q.length;
+  app.innerHTML = `
+  <section class="home">
+    <div class="card">
+      <h2>시험 설정</h2>
+      <p class="hint">전력공학 5장(고장계산 및 안정도) ${CH[5].count}문항, 6장(중성점 접지방식) ${CH[6].count}문항, 총 ${total}문항입니다.</p>
+      <div class="field"><span class="lab">출제 범위</span>
+        <div class="seg" id="g-ch">
+          <button type="button" data-v="all" aria-pressed="${cfg.ch==='all'}">5장 + 6장 전체</button>
+          <button type="button" data-v="5" aria-pressed="${cfg.ch==='5'}">5장만</button>
+          <button type="button" data-v="6" aria-pressed="${cfg.ch==='6'}">6장만</button>
+        </div></div>
+      <div class="field"><span class="lab">출제 순서</span>
+        <div class="seg" id="g-order">
+          <button type="button" data-v="seq" aria-pressed="${cfg.order==='seq'}">번호 순</button>
+          <button type="button" data-v="rand" aria-pressed="${cfg.order==='rand'}">랜덤</button>
+        </div></div>
+      <div class="field"><span class="lab">풀이 방식</span>
+        <div class="seg" id="g-mode">
+          <button type="button" data-v="practice" aria-pressed="${cfg.mode==='practice'}">연습 (선택 즉시 정답·해설)</button>
+          <button type="button" data-v="exam" aria-pressed="${cfg.mode==='exam'}">시험 (제출 후 채점)</button>
+        </div></div>
+      ${single?`<div class="field"><label for="from">문제 범위 (${cfg.ch}장)</label>
+        <div class="range">
+          <input id="from" type="number" min="1" max="${max}" value="${cfg.from}"> <span>번 ~</span>
+          <input id="to" type="number" min="1" max="${max}" value="${cfg.to}"> <span>번</span>
+        </div></div>`:`<p class="hint" style="margin-top:16px">전체 범위에서는 번호 범위 지정 없이 ${total}문항 모두 출제됩니다. 번호 범위를 정하려면 한 장만 선택하세요.</p>`}
+      <div class="row" style="margin-top:20px"><button class="btn" id="start" type="button">시작하기</button></div>
+    </div>
+  </section>`;
+  app.querySelectorAll('#g-ch button').forEach(b=>b.onclick=()=>{
+    cfg.ch=b.dataset.v;
+    if(cfg.ch!=='all'){ cfg.from=1; cfg.to=CH[cfg.ch].count; }
+    renderHome();
+  });
+  app.querySelectorAll('#g-order button').forEach(b=>b.onclick=()=>{cfg.order=b.dataset.v;renderHome();});
+  app.querySelectorAll('#g-mode button').forEach(b=>b.onclick=()=>{cfg.mode=b.dataset.v;renderHome();});
+  document.getElementById('start').onclick=()=>{
+    let ids;
+    if(cfg.ch==='all'){ ids=Q.map((q,i)=>i); }
+    else{
+      const m=CH[cfg.ch].count;
+      let f=parseInt(document.getElementById('from').value)||1, t=parseInt(document.getElementById('to').value)||m;
+      f=Math.max(1,Math.min(m,f)); t=Math.max(1,Math.min(m,t)); if(f>t)[f,t]=[t,f];
+      cfg.from=f; cfg.to=t;
+      ids=Q.map((q,i)=>i).filter(i=>Q[i].ch===+cfg.ch && Q[i].n>=f && Q[i].n<=t);
+    }
+    begin(ids);
+  };
+}
+function begin(ids){
+  if(cfg.order==='rand'){ for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]];} }
+  S={ids,pos:0,ans:{},mode:cfg.mode,done:false};
+  renderQuiz();
+}
+const revealed = i => S.done || (S.mode==='practice' && S.ans[i]!==undefined);
+const mixed = () => new Set(S.ids.map(i=>Q[i].ch)).size>1;
+const label = i => mixed() ? `${Q[i].ch}-${String(Q[i].n).padStart(2,'0')}` : String(Q[i].n);
+
+function renderQuiz(){
+  const idx=S.ids[S.pos], q=Q[idx], sel=S.ans[idx], rev=revealed(idx);
+  const optsHtml=q.o.map((t,i)=>{
+    const k=i+1; let c='opt';
+    if(rev){ if(k===q.a)c+=' right'; else if(k===sel)c+=' wrong'; }
+    else if(k===sel)c+=' sel';
+    return `<li><button type="button" class="${c}" data-k="${k}" ${rev?'disabled':''} aria-pressed="${k===sel}"><span class="no">${NUM[i]}</span><span>${inline(t)}</span></button></li>`;
+  }).join('');
+  let verdict='', exp='';
+  if(rev){
+    verdict = sel===undefined ? `<div class="verdict bad">미응답 · 정답 ${NUM[q.a-1]}</div>`
+      : sel===q.a ? `<div class="verdict ok">정답입니다. ${NUM[q.a-1]}</div>`
+      : `<div class="verdict bad">오답입니다. 정답은 ${NUM[q.a-1]}</div>`;
+    const fg=figOf(q);
+    exp = `<div class="exp"><span class="tt">해설</span>${html(q.e)}${q.tbl?tblHtml(q.tbl):''}${q.efig&&fg?`<div class="figsvg" style="margin-top:10px">${fg()}</div>`:''}</div>`;
+  }
+  const answered=Object.keys(S.ans).length;
+  const mx=mixed();
+  const grid=S.ids.map((id,i)=>{
+    let c=''; const a=S.ans[id];
+    if(S.done){ c = a===Q[id].a?'ok':'no'; }
+    else if(S.mode==='practice' && a!==undefined){ c = a===Q[id].a?'ok':'no'; }
+    else if(a!==undefined) c='ans';
+    if(i===S.pos) c+=' cur';
+    if(mx) c+=' wide';
+    return `<button type="button" data-p="${i}" class="${c}" aria-label="${Q[id].ch}장 ${Q[id].n}번">${label(id)}</button>`;
+  }).join('');
+  const last = S.pos===S.ids.length-1;
+  const fg0=figOf(q);
+  app.innerHTML=`
+  <div class="quiz">
+    <section class="card qcard ch${q.ch}" aria-live="polite">
+      <div class="meta">
+        <span class="tag chip c${q.ch}">${q.ch}장</span>
+        ${q.f?'<span class="tag hot">집중공략</span>':''}
+        <span class="stars" aria-label="중요도 ${q.s}">${stars(q.s)}</span>
+        ${q.src?`<span>${html(q.src).replace(/<\/?p>/g,'')}</span>`:''}
+      </div>
+      <div class="qhead"><div class="qno">${String(q.n).padStart(2,'0')}</div>
+        <div class="qtext">${html(q.q)}</div></div>
+      ${q.qtbl?`<div class="qtbl">${tblHtml(q.qtbl)}</div>`:''}
+      ${q.fig&&!q.efig?`<div class="fig"><b>그림</b>${fg0?`<div class="figsvg">${fg0()}</div>`:''}</div>`:''}
+      <ul class="opts">${optsHtml}</ul>
+      ${verdict}${exp}
+      <div class="nav">
+        <button type="button" class="btn ghost" id="prev" ${S.pos===0?'disabled':''}>이전</button>
+        ${ (!last) ? `<button type="button" class="btn" id="next">다음</button>`
+          : (S.done ? `<button type="button" class="btn" id="toResult">결과 보기</button>`
+                    : `<button type="button" class="btn" id="submit">${S.mode==='practice'?'결과 보기':'제출하고 채점'}</button>`)}
+      </div>
+    </section>
+    <aside class="side card">
+      <h3>답안지</h3>
+      <div class="prog">${answered} / ${S.ids.length} 응답</div>
+      <div class="grid">${grid}</div>
+      <div class="row">
+        ${S.done?'':`<button type="button" class="btn ghost" id="submit2">${S.mode==='practice'?'결과 보기':'제출하고 채점'}</button>`}
+        <button type="button" class="btn ghost" id="home">처음으로</button>
+      </div>
+    </aside>
+  </div>`;
+  mathify(app);
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{S.ans[idx]=parseInt(b.dataset.k);renderQuiz();});
+  app.querySelectorAll('.grid button').forEach(b=>b.onclick=()=>{S.pos=parseInt(b.dataset.p);renderQuiz();window.scrollTo(0,0);});
+  const $=id=>document.getElementById(id);
+  if($('prev'))$('prev').onclick=()=>{S.pos--;renderQuiz();window.scrollTo(0,0);};
+  if($('next'))$('next').onclick=()=>{S.pos++;renderQuiz();window.scrollTo(0,0);};
+  ['submit','submit2'].forEach(id=>{ if($(id))$(id).onclick=finish; });
+  if($('toResult'))$('toResult').onclick=renderResult;
+  $('home').onclick=()=>{S=null;renderHome();};
+}
+function finish(){ S.done=true; renderResult(); window.scrollTo(0,0); }
+
+function renderResult(){
+  const total=S.ids.length;
+  const right=S.ids.filter(id=>S.ans[id]===Q[id].a).length;
+  const wrong=S.ids.filter(id=>S.ans[id]!==Q[id].a);
+  const pct=Math.round(right/total*100);
+  const mx=mixed();
+  const grid=S.ids.map((id,i)=>`<button type="button" data-p="${i}" class="${S.ans[id]===Q[id].a?'ok':'no'}${mx?' wide':''}" aria-label="${Q[id].ch}장 ${Q[id].n}번">${label(id)}</button>`).join('');
+  const byCh = [5,6].map(c=>{
+    const ids=S.ids.filter(id=>Q[id].ch===c); if(!ids.length) return '';
+    const r=ids.filter(id=>S.ans[id]===Q[id].a).length;
+    return `<span>${c}장 ${r} / ${ids.length}</span>`;
+  }).filter(Boolean).join(' · ');
+  app.innerHTML=`
+  <section class="card result" style="max-width:720px">
+    <div><div class="score">${right}<small> / ${total}</small></div>
+    <div class="pass">정답률 ${pct}%</div>
+    ${mx?`<div class="hint" style="margin-top:4px">${byCh}</div>`:''}</div>
+    <p class="hint">번호를 누르면 해당 문제의 정답과 해설을 다시 볼 수 있습니다. 초록은 정답, 빨강은 오답·미응답입니다.</p>
+    <div class="grid">${grid}</div>
+    <div class="row">
+      <button type="button" class="btn" id="retryWrong" ${wrong.length?'':'disabled'}>틀린 문제만 다시 풀기 (${wrong.length})</button>
+      <button type="button" class="btn ghost" id="review">첫 문제부터 해설 보기</button>
+      <button type="button" class="btn ghost" id="home">처음으로</button>
+    </div>
+  </section>`;
+  app.querySelectorAll('.grid button').forEach(b=>b.onclick=()=>{S.pos=parseInt(b.dataset.p);renderQuiz();window.scrollTo(0,0);});
+  document.getElementById('retryWrong').onclick=()=>{const o=cfg.order;cfg.order='seq';begin(wrong.slice());cfg.order=o;};
+  document.getElementById('review').onclick=()=>{S.pos=0;renderQuiz();window.scrollTo(0,0);};
+  document.getElementById('home').onclick=()=>{S=null;renderHome();};
+}
+
+renderHome();
+
+</script>
+
+</body></html>
